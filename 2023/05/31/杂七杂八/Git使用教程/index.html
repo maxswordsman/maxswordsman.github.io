@@ -1,0 +1,456 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Git使用教程 | Maxswordsman</title><meta name="author" content="Maxswordsman"><meta name="copyright" content="Maxswordsman"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Git使用教程文档来源 一、配置1.Git配置（1）所有配置（系统\用户）1git cnfig -l   （2）系统配置1git config --system --list   （3）当前用户配置这是必须配置的（相当于告诉github你的身份，用户标识） 1git config --global  --list   设置用户名以及邮箱 12git config --global user.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git使用教程">
+<meta property="og:url" content="http://example.com/2023/05/31/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/Git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Maxswordsman">
+<meta property="og:description" content="Git使用教程文档来源 一、配置1.Git配置（1）所有配置（系统\用户）1git cnfig -l   （2）系统配置1git config --system --list   （3）当前用户配置这是必须配置的（相当于告诉github你的身份，用户标识） 1git config --global  --list   设置用户名以及邮箱 12git config --global user.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/head.webp">
+<meta property="article:published_time" content="2023-05-31T08:27:00.000Z">
+<meta property="article:modified_time" content="2023-05-31T08:27:00.000Z">
+<meta property="article:author" content="Maxswordsman">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image/head.webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/05/31/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/Git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Git使用教程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-31 16:27:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = 'hidden';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+
+preloader.initLoading()
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/head.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Maxswordsman"><span class="site-name">Maxswordsman</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Git使用教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-31T08:27:00.000Z" title="发表于 2023-05-31 16:27:00">2023-05-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-31T08:27:00.000Z" title="更新于 2023-05-31 16:27:00">2023-05-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Git使用教程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><meta name="referrer" content="no-referrer" />
+
+
+<h2 id="Git使用教程"><a href="#Git使用教程" class="headerlink" title="Git使用教程"></a>Git使用教程</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Bf7uVhGiu47uOELjmC5uXQ">文档来源</a></p>
+<h3 id="一、配置"><a href="#一、配置" class="headerlink" title="一、配置"></a>一、配置</h3><h4 id="1-Git配置"><a href="#1-Git配置" class="headerlink" title="1.Git配置"></a>1.Git配置</h4><h5 id="（1）所有配置（系统-用户）"><a href="#（1）所有配置（系统-用户）" class="headerlink" title="（1）所有配置（系统\用户）"></a>（1）所有配置（系统\用户）</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cnfig -l</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531105332.png" alt="image-20230531105325132"></p>
+<h5 id="（2）系统配置"><a href="#（2）系统配置" class="headerlink" title="（2）系统配置"></a>（2）系统配置</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --system --<span class="built_in">list</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531105519.png" alt="image-20230531105519567"></p>
+<h5 id="（3）当前用户配置"><a href="#（3）当前用户配置" class="headerlink" title="（3）当前用户配置"></a>（3）当前用户配置</h5><p>这是必须配置的（相当于告诉github你的身份，用户标识）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global  --<span class="built_in">list</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531105604.png"></p>
+<p><strong>设置用户名以及邮箱</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;kuangshen&quot;</span>  #名称</span><br><span class="line">git config --global user.email <span class="number">24736743</span>@qq.com   #邮箱</span><br></pre></td></tr></table></figure>
+
+<p>当你安装Git后首先要做的事情是设置你的用户名称和e-mail地址。这是非常重要的，因为每次Git提交都会使用该信息。它被永远的嵌入到了你的提交中</p>
+<h5 id="（4）git相关配置文件"><a href="#（4）git相关配置文件" class="headerlink" title="（4）git相关配置文件"></a>（4）git相关配置文件</h5><p><strong>所有的配置文件，其实都保存在本地</strong></p>
+<ul>
+<li><p><code>Git\etc\gitconfog</code> :该目录位于 Git安装目录下 —-为系统级（System）别的配置文件</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531111253.png" alt="image-20230531111253609"></p>
+</li>
+<li><p>C:\Users\PC(Administrator)\ .gitconfig    只适用于当前登录用户的配置  –global 全局</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531110928.png" alt="image-20230531110928554"></p>
+<p>可以将用户本地文件进行清空，然后重新按照<code>设置用户名以及邮箱</code>的指令进行设置</p>
+<h3 id="二、GIT相关理论"><a href="#二、GIT相关理论" class="headerlink" title="二、GIT相关理论"></a>二、GIT相关理论</h3><p>Git本地有三个工作区域：**工作目录（Working Directory）、暂存区(Stage&#x2F;Index)、资源库(Repository或Git Directory)<strong>。如果在加上远程的</strong>git仓库(Remote Directory)**就可以分为四个工作区域。文件在这四个区域之间的转换关系如下：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531111613.png" alt="image-20230531111613688"></p>
+<ul>
+<li><p>Workspace：工作区，就是你平时存放项目代码的地方（<strong>一般是本地的项目目录</strong>）</p>
+</li>
+<li><p>Index &#x2F; Stage：暂存区，用于临时存放你的改动，事实上它只是一个文件，保存即将提交到文件列表信息</p>
+</li>
+<li><p>Repository：仓库区（或本地仓库），就是安全存放数据的位置，这里面有你提交到所有版本的数据。其中HEAD指向最新放入仓库的版本</p>
+</li>
+<li><p>Remote：远程仓库（<code>Github/Gitee</code>），托管代码的服务器，可以简单的认为是你项目组中的一台电脑用于远程数据交换</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531112426.png" alt="image-20230531112426685"></p>
+<ul>
+<li>Directory：使用Git管理的一个目录，也就是一个仓库，包含我们的工作空间和Git的管理空间。</li>
+<li><code>WorkSpace</code>：需要通过Git进行版本控制的目录和文件，这些目录和文件组成了工作空间。</li>
+<li>.git：存放Git管理信息的目录，<strong>初始化仓库的时候自动创建</strong>。(隐藏文件夹)</li>
+<li>Index&#x2F;Stage：暂存区，或者叫待提交更新区，在提交进入<code>repo</code>之前，我们可以把所有的更新放在暂存区。</li>
+<li><code>Local Repo</code>：本地仓库，一个存放在本地的版本库；HEAD会只是当前的开发分支（branch）。</li>
+<li>Stash：隐藏，是一个工作状态保存栈，用于保存&#x2F;恢复<code>WorkSpace</code>中的临时状态。</li>
+</ul>
+<h4 id="1-工作流程"><a href="#1-工作流程" class="headerlink" title="1.工作流程"></a>1.工作流程</h4><p>git的工作流程一般是这样的：</p>
+<p>１、在工作目录中添加、修改文件；(本地的工作目录)</p>
+<p>２、将需要进行版本管理的文件放入暂存区域；（<code>git add .</code>）</p>
+<p>３、将暂存区域的文件提交到(<strong>本地</strong>)git仓库。(<code>git commit</code>)</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531112950.png" alt="image-20230531112950463"></p>
+<p>如上图如果最后需要推送到远程的 <code>github</code> 或者 <code>gitee</code> 仓库需要 <code>pull</code></p>
+<h3 id="三、Git项目搭建"><a href="#三、Git项目搭建" class="headerlink" title="三、Git项目搭建"></a>三、Git项目搭建</h3><p>工作目录（<code>WorkSpace</code>)一般就是你希望Git帮助你管理的文件夹，可以是你项目的目录，也可以是一个空目录，<strong>建议不要有中文</strong></p>
+<p>日常使用只要记住下图6个命令：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531121824.png" alt="image-20230531121824834"></p>
+<h4 id="1-本地仓库搭建"><a href="#1-本地仓库搭建" class="headerlink" title="1.本地仓库搭建"></a>1.本地仓库搭建</h4><p>创建本地仓库的方法有两种：一种是创建全新的仓库，另一种是克隆远程仓库</p>
+<h5 id="（1）新仓库"><a href="#（1）新仓库" class="headerlink" title="（1）新仓库"></a>（1）新仓库</h5><p>在项目目录下，<code>git bash</code>输入</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 在当前目录新建一个Git代码库</span><br><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>执行后可以看到，仅仅在项目目录多出了一个.git目录，关于版本等的所有信息都在这个目录里面（隐藏文件夹）</p>
+<h5 id="（2）克隆远程仓库"><a href="#（2）克隆远程仓库" class="headerlink" title="（2）克隆远程仓库"></a>（2）克隆远程仓库</h5><p>将远程服务器上的仓库完全镜像一份至本地</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 克隆一个项目和它的整个代码历史(版本信息)</span><br><span class="line">git clone [url]  <span class="meta"># https:<span class="comment">//gitee.com/kuangstudy/openclass.git</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-Git文件操作"><a href="#2-Git文件操作" class="headerlink" title="2.Git文件操作"></a>2.Git文件操作</h4><p><strong>文件的四种状态</strong></p>
+<p>版本控制就是对文件的版本控制，要对文件进行修改、提交等操作，首先要知道文件当前在什么状态，不然可能会提交了现在还不想提交的文件，或者要提交的文件没提交上</p>
+<ul>
+<li><code>Untracked</code>: 未跟踪, 此文件在文件夹中, 但并没有加入到git库, 不参与版本控制. 通过<code>git add</code> 状态变为<code>Staged</code></li>
+<li><code>Unmodify</code>: 文件已经入库, 未修改, 即版本库中的文件快照内容与文件夹中完全一致. 这种类型的文件有两种去处, 如果它被修改, 而变为<code>Modified</code>. 如果使用<code>git rm</code>移出版本库, 则成为<code>Untracked</code>文件</li>
+<li><code>Modified</code>: 文件已修改, 仅仅是修改, 并没有进行其他的操作. 这个文件也有两个去处, 通过<code>git add</code>可进入暂存<code>staged</code>状态, 使用<code>git checkout</code> 则丢弃修改过, 返回到<code>unmodify</code>状态, 这个<code>git checkout</code>即从库中取出文件, 覆盖当前修改</li>
+</ul>
+<ul>
+<li><code>Staged</code>: 暂存状态. 执行<code>git commit</code>则将修改同步到库中, 这时库中的文件和本地文件又变为一致, 文件为<code>Unmodify</code>状态. 执行<code>git reset HEAD filename</code>取消暂存, 文件状态为<code>Modified</code></li>
+</ul>
+<h5 id="（1）操作"><a href="#（1）操作" class="headerlink" title="（1）操作"></a>（1）操作</h5><p>在本地项目目录下,<code>git bash</code>,输入</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531123649.png" alt="image-20230531123649256"></p>
+<p>当前目录下为空，没有文件待提交</p>
+<p>在目录下创建一个<code>hello.txt</code>,使用<code>git status</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531123852.png" alt="image-20230531123852493"></p>
+<p>出现一个没有被跟踪（<code>Unstracked</code>）的文件</p>
+<p>使用<code>git add .</code>将文件添加至暂存区里面</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531124052.png" alt="image-20230531124052028"></p>
+<p>在使用<code>git status</code>,出现</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531124126.png" alt="image-20230531124126932"></p>
+<p>存在一个文件，为<strong>待提交</strong>的状态了，暂存去有一个新文件了</p>
+<p>提交暂存区的内容到，本地的<code>git</code>仓库,输入<code>git commit -m &quot;消息内容&quot;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;new file hello.txt&quot;</span>   # -m 表示提交信息</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531124729.png" alt="image-20230531124728984"></p>
+<p>使用<code>git status</code>,继续查看当前状态</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531124814.png" alt="image-20230531124814244"></p>
+<p>没有文件待提交</p>
+<p><strong>总结</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#查看指定文件状态</span><br><span class="line">git status [filename]</span><br><span class="line"></span><br><span class="line">#查看所有文件状态</span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line"><span class="meta"># git add .                  添加所有文件到暂存区</span></span><br><span class="line"><span class="meta"># git commit -m <span class="string">&quot;消息内容&quot;</span>    提交暂存区中的内容到本地仓库 -m 提交信息</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-忽略文件"><a href="#3-忽略文件" class="headerlink" title="3.忽略文件"></a>3.忽略文件</h4><p>有些时候我们不想把某些文件纳入版本控制中，比如数据库文件，临时文件，设计文件等</p>
+<p>在主目录下建立<code>.gitignore</code>文件，此文件有如下规则：</p>
+<ul>
+<li><p>忽略文件中的空行或以井号（#）开始的行将会被忽略。</p>
+</li>
+<li><p>可以使用Linux通配符。例如：星号<code>（*）</code>代表任意多个字符，问号<code>（？）</code>代表一个字符，方括号<code>（[abc]）</code>代表可选字符范围，大括号<code>（&#123;string1,string2,...&#125;）</code>代表可选的字符串等。</p>
+</li>
+<li><p>如果名称的最前面有一个感叹号<code>（!）</code>，表示例外规则，将不被忽略。</p>
+</li>
+<li><p>如果名称的最前面是一个路径分隔符<code>（/）</code>，表示要忽略的文件在此目录下，而子目录中的文件不忽略。</p>
+</li>
+<li><p>如果名称的最后面是一个路径分隔符<code>（/）</code>，表示要忽略的是此目录下该名称的子目录，而非文件（默认文件或目录都忽略）。</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#为注释</span><br><span class="line">*.txt        #忽略所有 .txt结尾的文件,这样的话上传就不会被选中！</span><br><span class="line">!lib.txt     #但lib.txt除外</span><br><span class="line">/temp        #仅忽略项目根目录下的TODO文件,不包括其它目录temp</span><br><span class="line">build/       #忽略build/目录下的所有文件</span><br><span class="line">doc<span class="comment">/*.txt    #会忽略 doc/notes.txt 但不包括 doc/server/arch.t</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531125831.png" alt="image-20230531125831364"></p>
+<h4 id="4-使用gitee进行托管"><a href="#4-使用gitee进行托管" class="headerlink" title="4.使用gitee进行托管"></a>4.使用<code>gitee</code>进行托管</h4><h5 id="（1）本机绑定SSH公钥"><a href="#（1）本机绑定SSH公钥" class="headerlink" title="（1）本机绑定SSH公钥"></a>（1）本机绑定SSH公钥</h5><p>设置本机绑定SSH公钥，实现免密码登录</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 进入 C:\Users\Administrator\.ssh 目录</span><br><span class="line"># 生成公钥</span><br><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+
+<p>若你的机器上面已经有了<code>SSH-Key</code>,你可以继续创建 只要重新设置不同的公钥文件名就可以不将之前的覆盖了</p>
+<p>下图将名字设置为了 <code>gitee_lab.rsa</code>不至于覆盖值的rsa文件，密码可以不进行设置，否则每次进行<code>git</code>提交都需要输入密码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 进入 C:\Users\Administrator\.ssh 目录</span><br><span class="line"># 生成公钥</span><br><span class="line"> ssh-keygen -t rsa -C <span class="string">&quot;XXXXX@XXX.com&quot;</span>    #用户邮箱</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531140441.png" alt="image-20230531140441285"></p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531140941.png" alt="image-20230531140941636"></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiangyu1013/article/details/103559435">参考</a></p>
+<p>在<code>Gitee</code>上面进行公钥绑定</p>
+<p>设置—&gt;安全设置—-&gt;SSH公钥</p>
+<p>将上述的<code>gitee_lab.rsa.pub</code>用记事本打开，将其复制到SHH公钥的文本框内</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531141207.png" alt="image-20230531141207971"></p>
+<p>也可以不进行重新创建别的<code>SSH-Key</code>,使用一个<code>SSH-Key</code>同时链接<code>github以及gitee</code>.<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43197640/article/details/113465872">参考</a></p>
+<p>在<code>gitee</code>添加公钥之后，在<code>.ssh</code>文件下创建<code>1.txt</code>文件在将整个文件包含<code>txt</code>重命名为<code>config</code>文件，写入以下内容：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531152450.png" alt="image-20230531152450832"></p>
+<p>使用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@gitee.com   # 查看是否链接成功</span><br></pre></td></tr></table></figure>
+
+<p><strong>在<code>Gitee</code>进行仓库创建</strong></p>
+<h5 id="（2）上传本地文件"><a href="#（2）上传本地文件" class="headerlink" title="（2）上传本地文件"></a>（2）上传本地文件</h5><p>在本地创建一个工作目录（项目文件目录），在目录中打开<code>git bash</code></p>
+<p>将当前文件夹初始化为git本地仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>将本地仓库与远程创建的<code>gitee</code>仓库建立链接</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># git remote add origin &#123;仓库地址&#125;</span></span><br><span class="line">git remote add origin https:<span class="comment">//gitee.com/zhou-xuezhi/test.git</span></span><br></pre></td></tr></table></figure>
+
+<p>将码云上的仓库pull到本地文件夹</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master</span><br></pre></td></tr></table></figure>
+
+<p>对本地工作目录，进行添加你需要修改的文件</p>
+<p>将当前文件夹添加至暂存区</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+
+<p>将暂存的文件提交到本地仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m ‘第一次提交’</span><br></pre></td></tr></table></figure>
+
+<p>将本地仓库的文件推送到远程仓库中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<p>如果本地工作目录（项目目录）中的文件有修改，只需要进行本地项目目录<code>git bash</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add *</span><br><span class="line">git commit -m <span class="string">&#x27;再次提交&#x27;</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：需要在gitee的个人管理中的邮箱管理添加你的个人邮箱，gitee才可以进行代码托管</strong></p>
+<p>之后在将本地仓库中的文件推送到远程仓库中时，会弹出以下界面：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531154239.png" alt="image-20230531154239888"></p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20230531154258.png" alt="image-20230531154258578"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Username <span class="keyword">for</span> ‘https:<span class="comment">//gitee.com’: 输入的是gitee上你的邮箱账号,</span></span><br><span class="line">Password <span class="keyword">for</span> ‘https:<span class="comment">//gitee.com’’: 输入gitee的登录密码</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="5-使用github进行托管"><a href="#5-使用github进行托管" class="headerlink" title="5.使用github进行托管"></a>5.使用<code>github</code>进行托管</h4><p>在<code>github</code>上面创建一个<code>CLion_Cracking</code>的仓库</p>
+<p>新建一个<code>README.md</code>文件</p>
+<p>使用以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add README.md</span><br><span class="line">git commit -m &quot;first commit&quot;</span><br><span class="line">git branch -M main</span><br><span class="line">git remote add origin git@github.com:maxswordsman/CLion_Crakcing.git</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、git分支"><a href="#三、git分支" class="headerlink" title="三、git分支"></a>三、git分支</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 列出所有本地分支</span><br><span class="line">git branch</span><br><span class="line">    </span><br><span class="line"># 重命名分支</span><br><span class="line">git branch -M &#123;branch_name&#125;</span><br><span class="line"></span><br><span class="line"># 列出所有远程分支</span><br><span class="line">git branch -r</span><br><span class="line"></span><br><span class="line"># 新建一个分支，但依然停留在当前分支</span><br><span class="line">git branch [branch-name]</span><br><span class="line"></span><br><span class="line"># 新建一个分支，并切换到该分支</span><br><span class="line">git checkout -b [branch]</span><br><span class="line"></span><br><span class="line"># 合并指定分支到当前分支</span><br><span class="line">$ git merge [branch]</span><br><span class="line"></span><br><span class="line"># 删除分支</span><br><span class="line">$ git branch -d [branch-name]</span><br><span class="line"></span><br><span class="line"># 删除远程分支</span><br><span class="line">$ git push origin --delete [branch-name]</span><br><span class="line">$ git branch -dr [remote/branch]</span><br></pre></td></tr></table></figure>
+
+<p><code>master</code>主分支应该非常稳定，用来发布新版本，一般情况下不允许在上面工作，工作一般情况下在新建的dev分支上工作，工作完后，比如上要发布，或者说<code>dev</code>分支代码稳定后可以合并到主分支<code>master</code>上来。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Maxswordsman</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/05/31/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/Git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">http://example.com/2023/05/31/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/Git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Maxswordsman</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Git/">Git</a></div><div class="post_share"><div class="social-share" data-image="/image/head.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/05/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/SNN/Tonic.utils.plot.grid()/" title="Tonic.utils.plot.grid()"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Tonic.utils.plot.grid()</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/head.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Maxswordsman</div><div class="author-info__description">不颓好胜之心</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/maxswordsman"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/maxswordsman" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2723937292@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="toc-text">Git使用教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE"><span class="toc-text">一、配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Git%E9%85%8D%E7%BD%AE"><span class="toc-text">1.Git配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%89%80%E6%9C%89%E9%85%8D%E7%BD%AE%EF%BC%88%E7%B3%BB%E7%BB%9F-%E7%94%A8%E6%88%B7%EF%BC%89"><span class="toc-text">（1）所有配置（系统\用户）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE"><span class="toc-text">（2）系统配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE"><span class="toc-text">（3）当前用户配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%884%EF%BC%89git%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">（4）git相关配置文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81GIT%E7%9B%B8%E5%85%B3%E7%90%86%E8%AE%BA"><span class="toc-text">二、GIT相关理论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">1.工作流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81Git%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA"><span class="toc-text">三、Git项目搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E6%90%AD%E5%BB%BA"><span class="toc-text">1.本地仓库搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%96%B0%E4%BB%93%E5%BA%93"><span class="toc-text">（1）新仓库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%85%8B%E9%9A%86%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-text">（2）克隆远程仓库</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Git%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-text">2.Git文件操作</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%93%8D%E4%BD%9C"><span class="toc-text">（1）操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6"><span class="toc-text">3.忽略文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8gitee%E8%BF%9B%E8%A1%8C%E6%89%98%E7%AE%A1"><span class="toc-text">4.使用gitee进行托管</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%9C%AC%E6%9C%BA%E7%BB%91%E5%AE%9ASSH%E5%85%AC%E9%92%A5"><span class="toc-text">（1）本机绑定SSH公钥</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E4%B8%8A%E4%BC%A0%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6"><span class="toc-text">（2）上传本地文件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E4%BD%BF%E7%94%A8github%E8%BF%9B%E8%A1%8C%E6%89%98%E7%AE%A1"><span class="toc-text">5.使用github进行托管</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81git%E5%88%86%E6%94%AF"><span class="toc-text">三、git分支</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Maxswordsman</div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer type="text/javascript" src="https://cdn1.tianli0.top/npm/sweetalert2@8.19.0/dist/sweetalert2.all.js"></script><script defer src="/js/lunar.js"></script><script defer src="/js/day.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body></html>
