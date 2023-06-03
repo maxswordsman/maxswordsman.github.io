@@ -31,6 +31,33 @@
     
     
     <entry>
+      <title>Git使用教程</title>
+      <link href="/2023/05/31/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/Hexo%E9%AD%94%E6%94%B9%E6%95%99%E7%A8%8B/"/>
+      <url>/2023/05/31/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/Hexo%E9%AD%94%E6%94%B9%E6%95%99%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<meta name="referrer" content="no-referrer" /><h2 id="Hexo魔改教程"><a href="#Hexo魔改教程" class="headerlink" title="Hexo魔改教程"></a>Hexo魔改教程</h2><p><a href="https://www.fomal.cc/posts/e593433d.html">大佬教程点这里</a></p><p>每次加入新的文章之后，在本地的项目文件下（工作目录下）,<code>git bash</code>输入</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 杂七杂八 </category>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Tonic.utils.plot.grid()</title>
       <link href="/2023/05/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/SNN/Tonic.utils.plot.grid()/"/>
       <url>/2023/05/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/SNN/Tonic.utils.plot.grid()/</url>
