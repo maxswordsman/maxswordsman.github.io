@@ -1,0 +1,490 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>TinywebServer代码详解-调试编译运行与压力测试（15） | Maxswordsman</title><meta name="author" content="Maxswordsman"><meta name="copyright" content="Maxswordsman"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="TinywebServer代码详解– 调试编译运行与压力测试（15）一、环境该项目，用到的额外的库，有JSONCPP用于对JSON数据进行解析以及MYSQL库用于连接数据库 1.JSON库使用命令安装 12$ sudo apt-get update$ sudo apt-get install libjsoncpp-dev    2.MYSQL安装以及简单的操作，可以进行跳转至链接：UBUNT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TinywebServer代码详解-调试编译运行与压力测试（15）">
+<meta property="og:url" content="https://maxswordsman.github.io/2024/01/24/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/TinywebServer%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3--%20%E8%B0%83%E8%AF%95%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E4%B8%8E%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%EF%BC%8815%EF%BC%89/index.html">
+<meta property="og:site_name" content="Maxswordsman">
+<meta property="og:description" content="TinywebServer代码详解– 调试编译运行与压力测试（15）一、环境该项目，用到的额外的库，有JSONCPP用于对JSON数据进行解析以及MYSQL库用于连接数据库 1.JSON库使用命令安装 12$ sudo apt-get update$ sudo apt-get install libjsoncpp-dev    2.MYSQL安装以及简单的操作，可以进行跳转至链接：UBUNT">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://maxswordsman.github.io/image/head2.webp">
+<meta property="article:published_time" content="2024-01-24T08:29:00.000Z">
+<meta property="article:modified_time" content="2024-01-24T08:29:00.000Z">
+<meta property="article:author" content="Maxswordsman">
+<meta property="article:tag" content="项目开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxswordsman.github.io/image/head2.webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://maxswordsman.github.io/2024/01/24/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/TinywebServer%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3--%20%E8%B0%83%E8%AF%95%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E4%B8%8E%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%EF%BC%8815%EF%BC%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'TinywebServer代码详解-调试编译运行与压力测试（15）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-24 16:29:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = 'hidden';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+
+preloader.initLoading()
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/head2.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Maxswordsman"><span class="site-name">Maxswordsman</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">TinywebServer代码详解-调试编译运行与压力测试（15）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-24T08:29:00.000Z" title="发表于 2024-01-24 16:29:00">2024-01-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-24T08:29:00.000Z" title="更新于 2024-01-24 16:29:00">2024-01-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/">项目开发</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC/">WebServerC++</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="TinywebServer代码详解-调试编译运行与压力测试（15）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><meta name="referrer" content="no-referrer" />
+
+
+<h2 id="TinywebServer代码详解–-调试编译运行与压力测试（15）"><a href="#TinywebServer代码详解–-调试编译运行与压力测试（15）" class="headerlink" title="TinywebServer代码详解– 调试编译运行与压力测试（15）"></a>TinywebServer代码详解– 调试编译运行与压力测试（15）</h2><h3 id="一、环境"><a href="#一、环境" class="headerlink" title="一、环境"></a>一、环境</h3><p>该项目，用到的额外的库，有<code>JSONCPP</code>用于对<code>JSON</code>数据进行解析以及<code>MYSQL</code>库用于连接数据库</p>
+<h4 id="1-JSON库"><a href="#1-JSON库" class="headerlink" title="1.JSON库"></a>1.JSON库</h4><p>使用命令安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install libjsoncpp-dev</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<h4 id="2-MYSQL"><a href="#2-MYSQL" class="headerlink" title="2.MYSQL"></a>2.MYSQL</h4><p>安装以及简单的操作，可以进行跳转至链接：<code>UBUNTU</code>下安装<code>MYSQL</code></p>
+<hr>
+<hr>
+<hr>
+<h3 id="二、调试与编译运行"><a href="#二、调试与编译运行" class="headerlink" title="二、调试与编译运行"></a>二、调试与编译运行</h3><h4 id="1-调试"><a href="#1-调试" class="headerlink" title="1.调试"></a>1.调试</h4><p>使用<code>make</code>命令，对每一个模块生成目标文件（<code>.o</code>文件），而不进行链接。这样做的优点：</p>
+<blockquote>
+<p><strong>快速编译</strong>：开发者可能只想<strong>快速编译一个文件来检查语法错误或其他问题（可以模块化对错误问题进行定位）</strong>，而不进行完整的构建过程</p>
+<p><strong>部分更新</strong>：在大型项目中，如果只修改了一个文件，使用 <code>make</code> 可以仅重新编译该文件对应的对象文件，提高编译效率（<strong>后续可以通过命令将多个目标文件进行链接为一个可执行文件</strong>）</p>
+<p><strong>模块化测试</strong>：在某些情况下，开发者可能需要构建特定的对象文件以进行单元测试或模块测试</p>
+</blockquote>
+<hr>
+<h5 id="（1）CGImysql"><a href="#（1）CGImysql" class="headerlink" title="（1）CGImysql"></a>（1）CGImysql</h5><p>在该目录的终端下，运行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make sql_connection_pool.o</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240715170752.png" alt="image-20240715170752854"></p>
+<p>数据库连接池模块中，无语法问题</p>
+<hr>
+<h5 id="（2）http"><a href="#（2）http" class="headerlink" title="（2）http"></a>（2）http</h5><p>在该目录的终端下，运行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make http_conn.o</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240715170944.png" alt="image-20240715170944161"></p>
+<p><code>http</code>连接模块中，无语法问题</p>
+<hr>
+<h5 id="（3）lock"><a href="#（3）lock" class="headerlink" title="（3）lock"></a>（3）lock</h5><p>模板类，仅有头文件，无法编译为目标文件</p>
+<hr>
+<h5 id="（4）log"><a href="#（4）log" class="headerlink" title="（4）log"></a>（4）log</h5><p>在该目录的终端下，运行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make log.o</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240715171221.png" alt="image-20240715171221249"></p>
+<p><code>log</code>日志模块中，无语法问题</p>
+<hr>
+<h5 id="（5）timer"><a href="#（5）timer" class="headerlink" title="（5）timer"></a>（5）timer</h5><p>在该目录的终端下，运行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make lst_timer.o</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240715171353.png" alt="image-20240715171353148"></p>
+<p>定时器模块中，无语法问题</p>
+<hr>
+<h5 id="（6）config"><a href="#（6）config" class="headerlink" title="（6）config"></a>（6）config</h5><p>在该目录的终端下，运行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make config.o</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240715171519.png" alt="image-20240715171519263"></p>
+<p>处理配置文件的源文件中，无语法问题</p>
+<hr>
+<h5 id="（7）webserver"><a href="#（7）webserver" class="headerlink" title="（7）webserver"></a>（7）webserver</h5><p>在该目录的终端下，运行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make webserver.o</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240715171653.png" alt="image-20240715171653674"></p>
+<p>服务器主程序的源文件中，无语法问题</p>
+<hr>
+<hr>
+<h4 id="2-编译运行"><a href="#2-编译运行" class="headerlink" title="2.编译运行"></a>2.编译运行</h4><ul>
+<li><p>服务器测试环境</p>
+<blockquote>
+<p>Ubuntu版本 20.01.4 LTS</p>
+<p>MYSQL版本 8.0.37</p>
+</blockquote>
+</li>
+<li><p>浏览器测试环境</p>
+<blockquote>
+<p>Windows、Linux均可</p>
+<p>Chrome</p>
+</blockquote>
+<ul>
+<li>测试前确认以安装<code>MYSQL</code>数据库</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 建立yourdb库</span><br><span class="line">create database yourdb;</span><br><span class="line"></span><br><span class="line">// 创建user表</span><br><span class="line">USE yourdb;</span><br><span class="line">CREATE TABLE user(</span><br><span class="line">    username char(50) NULL,</span><br><span class="line">    passwd char(50) NULL</span><br><span class="line">)ENGINE=InnoDB;</span><br><span class="line"></span><br><span class="line">// 添加数据</span><br><span class="line">INSERT INTO user(username, passwd) VALUES(&#x27;name&#x27;, &#x27;passwd&#x27;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在dbconf.json文件中初始化数据库相关信息</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数据库服务器端口、用户名、密码、库名</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;db_port&quot;</span><span class="punctuation">:</span> <span class="number">3306</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;userName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;zxz&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;password&quot;</span><span class="punctuation">:</span> <span class="string">&quot;123456&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dbName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;serverdb&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>项目整体的目录结构如下：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">(base) zxz@ubuntu:~/Proj/C_C++/WebServer/TinyWebServerBymyself$ tree</span><br><span class="line">.</span><br><span class="line">├── build</span><br><span class="line">│   └── 编译产生的中间文件</span><br><span class="line">├── CGImysql</span><br><span class="line">│   ├── sql_connection_pool.cpp</span><br><span class="line">│   └── sql_connection_pool.h</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── config.cpp</span><br><span class="line">├── config.h</span><br><span class="line">├── dbconf.json</span><br><span class="line">├── http</span><br><span class="line">│   ├── http_conn.cpp</span><br><span class="line">│   └── http_conn.h</span><br><span class="line">├── lock</span><br><span class="line">│   ├── locker.h</span><br><span class="line">│   └── README.md</span><br><span class="line">├── <span class="built_in">log</span></span><br><span class="line">│   ├── block_queue.h</span><br><span class="line">│   ├── log.cpp</span><br><span class="line">│   └── log.h</span><br><span class="line">├── main.cpp</span><br><span class="line">├── root</span><br><span class="line">│   └── 各种资源文件...</span><br><span class="line">├── threadpool</span><br><span class="line">│   ├── README.md</span><br><span class="line">│   └── threadpool.h</span><br><span class="line">├── timer</span><br><span class="line">│   ├── lst_timer.cpp</span><br><span class="line">│   └── lst_timer.h</span><br><span class="line">├── TinyWebServerBymyself</span><br><span class="line">├── webserver.cpp</span><br><span class="line">└── webserver.h</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>编译</strong>：</li>
+</ul>
+<p>在项目目录<code>TinyWebServerBymyself</code>下的<code>build</code>目录中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cmake ..</span><br><span class="line">$ make</span><br></pre></td></tr></table></figure>
+
+<p>生成的可执行文件在<code>TinyWebServerBymyself</code>目录下</p>
+<ul>
+<li><strong>默认运行</strong>：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./TinyWebServerBymyself </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>个性化运行</strong>：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./TinyWebServerBymyself [-p port] [-l LOGWrite] [-m TRIGMode] [-o OPT_LINGER] [-s sql_num] [-t thread_num] [-c close_log] [-a actor_model]</span><br></pre></td></tr></table></figure>
+
+<p>以上参数不是非必须，不用全部使用，根据个人情况搭配选用即可</p>
+<blockquote>
+<p><code>p</code>，自定义端口号</p>
+<ul>
+<li>默认9006</li>
+</ul>
+<p><code>l</code>，选择日志写入方式，默认同步写入</p>
+<ul>
+<li>0，同步写入</li>
+<li>1，异步写入</li>
+</ul>
+<p><code>m</code>，监听套接字和通信套接字的事件触发模式组合，默认使用LT + LT</p>
+<ul>
+<li>0，表示使用LT + LT</li>
+<li>1，表示使用LT + ET</li>
+<li>2，表示使用ET + LT</li>
+<li>3，表示使用ET + ET</li>
+</ul>
+<p><code>o</code>，优雅关闭连接，默认不使用</p>
+<ul>
+<li>0，不使用</li>
+<li>1，使用</li>
+</ul>
+<p><code>s</code>，数据库连接数量</p>
+<ul>
+<li>默认为8</li>
+</ul>
+<p><code>t</code>，线程数量</p>
+<ul>
+<li>默认为8</li>
+</ul>
+<p><code>c</code>，关闭日志，默认打开</p>
+<ul>
+<li>0，打开日志</li>
+<li>1，关闭日志</li>
+</ul>
+<p><code>a</code>，选择反应堆模型，默认<code>Proactor</code></p>
+<ul>
+<li>0，Proactor模型</li>
+<li>1，Reactor模型</li>
+</ul>
+</blockquote>
+<p><strong>测试用例命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./TinyWebServerBymyself -p 9007 -l 1 -m 3 -o 1 -s 10 -t 10 -c 1 -a 0</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>端口默认 9007</p>
+<p>异步写入日志</p>
+<p>使用ET + ET的事件触发模式</p>
+<p>使用优雅关闭连接</p>
+<p>数据库连接池中有10条连接</p>
+<p>线程池中有10条工作线程</p>
+<p>打开日志</p>
+<p>Proactor事件处理模型</p>
+</blockquote>
+<p>在Linux终端使用<code>ifconfig</code>命令查看，服务器主机IP：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240715202402.png" alt="image-20240715202402720"></p>
+<p><strong>浏览器端，打开指定网页</strong>：</p>
+<p>运行服务器程序后，在浏览器中输入，就可以访问服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.126.128:9007</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<h4 id="3-压力测试"><a href="#3-压力测试" class="headerlink" title="3.压力测试"></a>3.压力测试</h4><h5 id="（1）Webbench压力测试工具"><a href="#（1）Webbench压力测试工具" class="headerlink" title="（1）Webbench压力测试工具"></a>（1）Webbench压力测试工具</h5><p>压力测试使用的工具为<code>Webbench</code>，是一个简单但强大的网站压力测试工具，用于评估 HTTP 服务器的性能。它主要通过发送 HTTP 请求来模拟多个客户端并发访问服务器，以此来测试服务器在高负载下的表现</p>
+<p><strong>原理</strong>：</p>
+<blockquote>
+<p><strong>客户端模式</strong>：父进程<code>fork</code>若干个子进程，每个子进程在用户要求时间或默认的时间内对目标<code>webserver</code>循环发出实际访问请求，父子进程通过管道进行通信，子进程通过管道写端向父进程传递在若干次请求访问完毕后记录到的总信息，父进程通过管道读端读取子进程发来的相关信息，子进程在时间到后结束，父进程在所有子进程退出后统计并给用户显示最后的测试结果，然后退出</p>
+</blockquote>
+<p><strong>性能指标</strong>：</p>
+<blockquote>
+<p><strong>成功处理的请求数</strong>：在测试期间成功得到服务器响应的请求总数</p>
+<p><strong>每秒请求数（<code>QPS</code>）</strong>：平均每秒成功处理的查询数量</p>
+<p><strong>传输数据量</strong>：所有请求和响应中传输的总数据量</p>
+</blockquote>
+<hr>
+<h5 id="（2）测试"><a href="#（2）测试" class="headerlink" title="（2）测试"></a>（2）测试</h5><p><strong>服务器主机机器环境</strong>，4核CPU，单个核心的线程数为1</p>
+<p><code>webbench.c</code>源码编译，在<code>TinyWebServerBymyself</code>目录下的压力测试目录<code>test_presure</code>目录下存在，压力测试工具源码，目录终端输入如下指令，编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gcc webbench.c -o webbench</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用指令进行测试</strong>，终端输入如下指令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./webbench -c 10500 -t 10 http://192.168.126.128:9006/</span><br></pre></td></tr></table></figure>
+
+<p><code>-c</code>表示客户端数， <code>-t</code>表示时间</p>
+<ul>
+<li><code>Proactor</code>，<code>LT + LT</code>，19753<code>QPS</code></li>
+</ul>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240716112824.png" alt="image-20240716112824735"></p>
+<ul>
+<li><code>Proactor</code>，<code>LT + ET</code>，20164<code>QPS</code></li>
+</ul>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240716113008.png" alt="image-20240716113008217"></p>
+<ul>
+<li><code>Proactor</code>，<code>ET + LT</code>，18084<code>QPS</code></li>
+</ul>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240716113242.png" alt="image-20240716113242320"></p>
+<ul>
+<li><code>Proactor</code>，<code>ET + ET</code>，17892<code>QPS</code></li>
+</ul>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240716113421.png" alt="image-20240716113421004"></p>
+<ul>
+<li><code>Reactor</code>，<code>LT + ET</code>，15965<code>QPS</code></li>
+</ul>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240716113559.png" alt="image-20240716113559496"></p>
+<blockquote>
+<p>并发总连接数：10500</p>
+<p>访问服务器时间：5s</p>
+<p>所有访问均成功</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://maxswordsman.github.io">Maxswordsman</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://maxswordsman.github.io/2024/01/24/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/TinywebServer%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3--%20%E8%B0%83%E8%AF%95%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E4%B8%8E%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%EF%BC%8815%EF%BC%89/">https://maxswordsman.github.io/2024/01/24/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/TinywebServer%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3--%20%E8%B0%83%E8%AF%95%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E4%B8%8E%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%EF%BC%8815%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://maxswordsman.github.io" target="_blank">Maxswordsman</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/">项目开发</a></div><div class="post_share"><div class="social-share" data-image="/image/head2.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/01/24/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/TinywebServer%E9%A1%B9%E7%9B%AE--%20%E7%AB%A0%E8%8A%82%E6%95%B4%E7%90%86%EF%BC%8816%EF%BC%89/" title="TinywebServer项目-章节整理（16）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">TinywebServer项目-章节整理（16）</div></div></a></div><div class="next-post pull-right"><a href="/2024/01/24/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/TinywebServer%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3--%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%BB%E7%A8%8B%E5%BA%8F%EF%BC%8814%EF%BC%89/" title="TinywebServer代码详解-服务器主程序（14）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">TinywebServer代码详解-服务器主程序（14）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/05/14/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/IPV4%E6%B5%81%E5%AA%92%E4%BD%93/IPV4%E6%B5%81%E5%AA%92%E4%BD%93%E9%A1%B9%E7%9B%AE-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/" title="IPV4流媒体网络多播-前置知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-14</div><div class="title">IPV4流媒体网络多播-前置知识</div></div></a></div><div><a href="/2024/05/15/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/IPV4%E6%B5%81%E5%AA%92%E4%BD%93/IPV4%E6%B5%81%E5%AA%92%E4%BD%93%E9%A1%B9%E7%9B%AE-%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90/" title="IPV4流媒体网络多播-代码解析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-15</div><div class="title">IPV4流媒体网络多播-代码解析</div></div></a></div><div><a href="/2024/01/24/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/TinywebServer%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3--%20%E5%AE%9A%E6%97%B6%E5%99%A8%E5%A4%84%E7%90%86%E9%9D%9E%E6%B4%BB%E5%8A%A8%E8%BF%9E%E6%8E%A5-%E4%B8%8A%EF%BC%887%EF%BC%89/" title="TinywebServer代码详解-定时器处理非活动连接-上（7）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-24</div><div class="title">TinywebServer代码详解-定时器处理非活动连接-上（7）</div></div></a></div><div><a href="/2024/01/24/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/TinywebServer%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3--%20%E5%AE%9A%E6%97%B6%E5%99%A8%E5%A4%84%E7%90%86%E9%9D%9E%E6%B4%BB%E5%8A%A8%E8%BF%9E%E6%8E%A5-%E4%B8%8B%EF%BC%888%EF%BC%89/" title="TinywebServer代码详解-定时器处理非活动连接-下（8）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-24</div><div class="title">TinywebServer代码详解-定时器处理非活动连接-下（8）</div></div></a></div><div><a href="/2024/01/24/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/TinywebServer%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3--%20%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0%EF%BC%8811%EF%BC%89/" title="TinywebServer代码详解-数据库连接池（11）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-24</div><div class="title">TinywebServer代码详解-数据库连接池（11）</div></div></a></div><div><a href="/2024/01/24/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/TinywebServer%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3--%20%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F-%E4%B8%8A%EF%BC%889%EF%BC%89/" title="TinywebServer代码详解-日志系统-上（9）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-24</div><div class="title">TinywebServer代码详解-日志系统-上（9）</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/head2.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Maxswordsman</div><div class="author-info__description">不颓好胜之心</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/maxswordsman"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/maxswordsman" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2723937292@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://gitee.com/zhou-xuezhi" target="_blank" title="Gitee"><i class="iconfont  icon-gitee" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#TinywebServer%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3%E2%80%93-%E8%B0%83%E8%AF%95%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E4%B8%8E%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%EF%BC%8815%EF%BC%89"><span class="toc-text">TinywebServer代码详解– 调试编译运行与压力测试（15）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83"><span class="toc-text">一、环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-JSON%E5%BA%93"><span class="toc-text">1.JSON库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-MYSQL"><span class="toc-text">2.MYSQL</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B0%83%E8%AF%95%E4%B8%8E%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C"><span class="toc-text">二、调试与编译运行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%B0%83%E8%AF%95"><span class="toc-text">1.调试</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89CGImysql"><span class="toc-text">（1）CGImysql</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89http"><span class="toc-text">（2）http</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%883%EF%BC%89lock"><span class="toc-text">（3）lock</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%884%EF%BC%89log"><span class="toc-text">（4）log</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%885%EF%BC%89timer"><span class="toc-text">（5）timer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%886%EF%BC%89config"><span class="toc-text">（6）config</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%887%EF%BC%89webserver"><span class="toc-text">（7）webserver</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C"><span class="toc-text">2.编译运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95"><span class="toc-text">3.压力测试</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89Webbench%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-text">（1）Webbench压力测试工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%B5%8B%E8%AF%95"><span class="toc-text">（2）测试</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Maxswordsman</div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer type="text/javascript" src="https://cdn1.tianli0.top/npm/sweetalert2@8.19.0/dist/sweetalert2.all.js"></script><script defer src="/js/lunar.js"></script><script defer src="/js/day.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body></html>
