@@ -1,0 +1,584 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>牛客WebServer项目实战 | Maxswordsman</title><meta name="author" content="Maxswordsman"><meta name="copyright" content="Maxswordsman"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="牛客WebServer项目实战本章内容，为牛客上WebServer项目的相关知识点，该部分内容也是与本项目TinyWebServer息息相关的  一、知识点1.异步IO异步 I&#x2F;O（输入&#x2F;输出）是一种允许程序在等待 I&#x2F;O 操作完成的同时继续执行其他任务的技术。这种方式提高了程序的效率和响应性，尤其是在涉及大量或慢速 I&#x2F;O 操作时（如网络通信、大文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="牛客WebServer项目实战">
+<meta property="og:url" content="https://maxswordsman.github.io/2024/01/21/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/%E7%89%9B%E5%AE%A2WebServer%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name" content="Maxswordsman">
+<meta property="og:description" content="牛客WebServer项目实战本章内容，为牛客上WebServer项目的相关知识点，该部分内容也是与本项目TinyWebServer息息相关的  一、知识点1.异步IO异步 I&#x2F;O（输入&#x2F;输出）是一种允许程序在等待 I&#x2F;O 操作完成的同时继续执行其他任务的技术。这种方式提高了程序的效率和响应性，尤其是在涉及大量或慢速 I&#x2F;O 操作时（如网络通信、大文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://maxswordsman.github.io/image/head2.webp">
+<meta property="article:published_time" content="2024-01-21T06:09:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T06:09:00.000Z">
+<meta property="article:author" content="Maxswordsman">
+<meta property="article:tag" content="项目开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxswordsman.github.io/image/head2.webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://maxswordsman.github.io/2024/01/21/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/%E7%89%9B%E5%AE%A2WebServer%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '牛客WebServer项目实战',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-21 14:09:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = 'hidden';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+
+preloader.initLoading()
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/head2.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Maxswordsman"><span class="site-name">Maxswordsman</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movie/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">牛客WebServer项目实战</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-21T06:09:00.000Z" title="发表于 2024-01-21 14:09:00">2024-01-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-21T06:09:00.000Z" title="更新于 2024-01-21 14:09:00">2024-01-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/">项目开发</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC/">WebServerC++</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>28分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="牛客WebServer项目实战"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><meta name="referrer" content="no-referrer" />
+
+
+<h2 id="牛客WebServer项目实战"><a href="#牛客WebServer项目实战" class="headerlink" title="牛客WebServer项目实战"></a>牛客WebServer项目实战</h2><p>本章内容，为牛客上<code>WebServer</code>项目的相关知识点，该部分内容也是与本项目<code>TinyWebServer</code>息息相关的</p>
+<hr>
+<h3 id="一、知识点"><a href="#一、知识点" class="headerlink" title="一、知识点"></a>一、知识点</h3><h4 id="1-异步IO"><a href="#1-异步IO" class="headerlink" title="1.异步IO"></a>1.异步IO</h4><p>异步 I&#x2F;O（输入&#x2F;输出）是一种允许程序在等待 I&#x2F;O 操作完成的同时继续执行其他任务的技术。这种方式提高了程序的效率和响应性，尤其是在涉及大量或慢速 I&#x2F;O 操作时（如网络通信、大文件操作等）</p>
+<p><strong>工作原理</strong>：</p>
+<p>在同步 I&#x2F;O 操作中，应用程序发出 I&#x2F;O 请求后必须等待操作完成才能继续执行。这种方式可能导致程序在等待期间资源被闲置。相比之下，异步 I&#x2F;O 允许应用程序在发出 I&#x2F;O 请求后立即继续执行。当 I&#x2F;O 操作完成时，程序通过回调函数、事件、信号或轮询等机制得到通知</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240517220929.png" alt="image-20240517220929906"></p>
+<hr>
+<h5 id="（1）IO多路复用是同步的"><a href="#（1）IO多路复用是同步的" class="headerlink" title="（1）IO多路复用是同步的"></a>（1）IO多路复用是同步的</h5><p><strong>同步与异步</strong></p>
+<ul>
+<li><strong>同步I&#x2F;O</strong>（Synchronous I&#x2F;O）：程序执行操作时会阻塞，直到I&#x2F;O完成。同步I&#x2F;O的例子包括常规的读写操作，直到数据被实际读取或写入，调用才返回。</li>
+<li><strong>异步I&#x2F;O</strong>（Asynchronous I&#x2F;O）：程序执行操作时不会阻塞，I&#x2F;O操作在后台进行，程序可以继续执行其他任务。当I&#x2F;O操作完成时，程序会以某种方式（如回调、事件、信号）被通知。</li>
+</ul>
+<p><strong>IO多路复用的性质</strong>：</p>
+<ul>
+<li><strong>同步性</strong>：尽管IO多路复用允许一个线程同时监视多个文件描述符，但当调用如<code>select()</code>、<code>poll()</code>或<code>epoll_wait()</code>等函数时，线程会阻塞在这些函数调用上，直到至少有一个文件描述符就绪（可读、可写或出现异常）。因此，从这个角度来看，IO多路复用是同步的，因为它会等待一个或多个I&#x2F;O操作的就绪信号。</li>
+<li><strong>非阻塞性</strong>：一旦IO多路复用函数指示某些文件描述符已就绪，对这些文件描述符的实际I&#x2F;O操作（如读写）通常是非阻塞性的。这意味着这些操作应该立即完成，不会导致应用程序代码阻塞。</li>
+</ul>
+<p><strong>总结</strong>：</p>
+<p>IO多路复用本质上是同步的，因为它在执行期间会阻塞应用程序，但它提供了一种高效的方式来同时监视多个I&#x2F;O流的状态，使得一旦有I&#x2F;O流就绪，就可以立即进行非阻塞操作。这种模式特别适用于需要高效处理大量并发连接的服务器应用程序。</p>
+<hr>
+<hr>
+<h4 id="2-UNIX-Linux上五种IO模型"><a href="#2-UNIX-Linux上五种IO模型" class="headerlink" title="2.UNIX/Linux上五种IO模型"></a>2.<code>UNIX/Linux</code>上五种<code>IO</code>模型</h4><h5 id="（1）阻塞IO-blocking"><a href="#（1）阻塞IO-blocking" class="headerlink" title="（1）阻塞IO (blocking)"></a>（1）阻塞IO (blocking)</h5><p>调用者调用了某个函数，等待这个函数返回，期间什么也不做，不停的去检查这个函数有没有返回，必须等这个函数返回才能进行下一步动作。IO操作，是对某一个文件描述符进行操作，因此可以将<strong>文件描述符的属性设置为非阻塞</strong>。其流程图如下：</p>
+<p>当用户程序执行 <code>read</code> ，线程会被阻塞，一直等到内核数据准备好，并把数据从内核缓冲区拷贝到应用程序的缓冲区中，当拷贝过程完成，<code>read</code> 才会返回</p>
+<p><strong>阻塞等待</strong>的是<strong>「内核数据准备好」和「数据从内核态拷贝到用户态」这两个过程</strong></p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519093427.png" alt="image-20240519093427103"></p>
+<p><code>read</code>函数是一个系统调用，当内核数据没有准备好时，线程被阻塞，无法执行别的操作，需要等到数据就绪，当数据就绪，<strong>又需要将数据从内核拷贝到用于空间（应用程序自己去执行，因此是一个<code>read</code>同步的IO操作）</strong>，然后返回，应用处理的数据</p>
+<hr>
+<h5 id="（2）非阻塞IO-non-blocking-NIO"><a href="#（2）非阻塞IO-non-blocking-NIO" class="headerlink" title="（2）非阻塞IO (non-blocking) NIO"></a>（2）非阻塞IO (non-blocking) NIO</h5><p>非阻塞等待，每隔一段时间就去检测IO事件是否就绪（通过代码不断的轮询检测，IO接口数据是否就绪）<strong>。没有就绪就可以做其他事</strong>。<strong>非阻塞I&#x2F;O执行系统调用总是立即返回</strong>，不管事件是否已经发生，若事件没有发生，则返回-1，此时可以根据 <code>errno</code> 区分这两种情况，对于<code>accept</code>，<code>recv</code> 和<code> send</code>，事件未发生时，<code>errno </code>通常被设置成 <code>EAGAIN</code>。</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519094145.png" alt="image-20240519094145823"></p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240520095947.png" alt="image-20240520095947379"></p>
+<p><strong>注意</strong>：<strong>这里最后一次<code> read</code> 调用，获取数据的过程，是一个同步的过程，是需要等待的过程。这里的同步指的是内核态的数据拷贝到用户程序的缓存区这个过程</strong></p>
+<p>可以通过<code>fcntl()</code>函数设置文件描述符的属性，可以将其设置为非阻塞IO</p>
+<p>当系统调用的 <code>read</code> 函数返回 <code>-1</code> 并且 <code>errno</code> 设置为 <code>EAGAIN</code>，<strong>这表明非阻塞读取操作在没有数据可读的情况下被调用</strong>。<code>EAGAIN</code> 是一个特殊的错误码，表示目前没有数据可供读取，但这并不是一个真正的失败，而是一个信号，告诉你现在没有数据可读</p>
+<p>对于非阻塞<code> I/O</code>（输入&#x2F;输出）操作，当没有数据可读或者无法立即执行读操作时，<code>read</code> 函数会返回 <code>EAGAIN</code>。这让应用程序有机会继续执行其他任务，而不是停在那里等待数据。处理 <code>EAGAIN</code> 的一个常见方法是稍后重试读取操作，或者使用某种形式的事件通知机制（如 <code>select()</code>、<code>poll()</code> 或 <code>epoll()</code>）来等待数据变得可用</p>
+<hr>
+<h5 id="（3）IO复用-IO-multiplexing"><a href="#（3）IO复用-IO-multiplexing" class="headerlink" title="（3）IO复用 (IO multiplexing)"></a>（3）IO复用 (IO multiplexing)</h5><p>Linux 用 <code>select/poll/epoll</code> 函数实现 IO 复用模型，这些函数也会使进程阻塞，<strong>但是和（单进程&#x2F;单线程下的）阻塞IO所不同的是这些函数可以同时阻塞多个IO操作。而且可以同时对多个读操作、写操作的IO函数进行检测</strong>。直到有数据可读或可写时（只要有一个IO就绪），才真正调用IO操作函数</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519095105.png" alt="image-20240519095105713"></p>
+<hr>
+<h5 id="（4）信号驱动-signal-driven"><a href="#（4）信号驱动-signal-driven" class="headerlink" title="（4）信号驱动 (signal-driven)"></a>（4）信号驱动 (signal-driven)</h5><p>Linux 用套接口进行信号驱动 IO，安装一个信号处理函数，进程继续运行并不阻塞，当IO事件就绪，进程收到 <code>SIGIO</code> 信号，然后处理 IO 事件</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519095433.png" alt="image-20240519095433306"></p>
+<p>内核在第一个阶段是异步，在第二个阶段是同步；<strong>与非阻塞IO的区别在于它提供了消息通知机制，不需要用户进程不断的轮询检查，减少了系统<code>API</code>的调用次数，提高了效率</strong></p>
+<hr>
+<h5 id="（5）异步-asynchronous"><a href="#（5）异步-asynchronous" class="headerlink" title="（5）异步 (asynchronous)"></a>（5）异步 (asynchronous)</h5><p><strong>异步 I&#x2F;O</strong> 是「内核数据准备好」和「数据从内核态拷贝到用户态」这<strong>两个过程都不用等待</strong></p>
+<p><code>Linux</code>中，可以调用 <code>aio_read</code> 函数告诉内核描述字缓冲区指针和缓冲区的大小、文件偏移及通知的方式，然后立即返回，当内核将数据拷贝到缓冲区后，再通知应用程序</p>
+<p>当我们发起 <code>aio_read</code> （异步 I&#x2F;O） 之后，就立即返回，内核自动将数据从内核空间拷贝到用户空间，这个拷贝过程同样是异步的，内核自动完成的，和前面的同步操作不一样，<strong>应用程序并不需要主动发起拷贝动作</strong>。过程如下图：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519095803.png" alt="image-20240519095803402"></p>
+<p>内核数据没有准备好时，系统调用立即返回之后，应用程序可以继续执行其他操作。<strong>当数据准备好，内核会帮助应用程序将数据从内核空间拷贝到用户空间（不需要应用程序自己拷贝，因此这个阶段为异步操作）</strong>，当拷贝完成，会通过异步io函数注册的通知方式，告知应用程序去处理数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Asynchronous I/O control block. */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">aiocb</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> aio_fildes; <span class="comment">/* File desriptor. */</span></span><br><span class="line">    <span class="type">int</span> aio_lio_opcode; <span class="comment">/* Operation to be performed. */</span></span><br><span class="line">    <span class="type">int</span> aio_reqprio; <span class="comment">/* Request priority offset. */</span></span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">void</span> *aio_buf; <span class="comment">/* Location of buffer. */</span></span><br><span class="line">    <span class="type">size_t</span> aio_nbytes; <span class="comment">/* Length of transfer. */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sigevent</span> <span class="title">aio_sigevent</span>;</span> <span class="comment">/* Signal number and value. */</span></span><br><span class="line">    <span class="comment">/* Internal members. */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">aiocb</span> *__<span class="title">next_prio</span>;</span></span><br><span class="line">    <span class="type">int</span> __abs_prio;</span><br><span class="line">    <span class="type">int</span> __policy;</span><br><span class="line">    <span class="type">int</span> __error_code;</span><br><span class="line">    <span class="type">__ssize_t</span> __return_value;</span><br><span class="line">    <span class="meta">#<span class="keyword">ifndef</span> __USE_FILE_OFFSET64</span></span><br><span class="line">    <span class="type">__off_t</span> aio_offset; <span class="comment">/* File offset. */</span></span><br><span class="line">    <span class="type">char</span> __pad[<span class="keyword">sizeof</span> (<span class="type">__off64_t</span>) - <span class="keyword">sizeof</span> (<span class="type">__off_t</span>)];</span><br><span class="line">    <span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="type">__off64_t</span> aio_offset; <span class="comment">/* File offset. */</span></span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="type">char</span> __glibc_reserved[<span class="number">32</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<h4 id="3-web-Server-网页服务器"><a href="#3-web-Server-网页服务器" class="headerlink" title="3.web Server (网页服务器)"></a>3.web Server (网页服务器)</h4><p>一个 <code>Web Server </code>就是一个服务器软件（程序），或者是运行这个服务器软件的硬件（计算机）。其主要功能是通过 <code>HTTP </code>协议与客户端（通常是浏览器（<code>Browser</code>））进行通信，来接收，存储，处理来自客户端的 <code>HTTP </code>请求，并对其请求做出 <code>HTTP </code>响应，返回给客户端其请求的内容（文件、网页等）或返回一个 <code>Error </code>信息 （<code>B/S</code>网络结构模式）</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519100702.png" alt="image-20240519100702945"></p>
+<p>通常用户使用 <code>Web</code> 浏览器与相应服务器进行通信。在浏览器中键入“域名”或“<code>IP</code>地址:端口号”，浏览器则先将你的域名解析成相应的 <code>IP</code> 地址或者直接根据你的<code>IP</code>地址向对应的 Web 服务器发送一个 <code>HTTP </code>请求。这一过程首先要通过 TCP 协议的三次握手建立与目标 <code>Web</code> 服务器的连接（**<code>HTTP</code>协议底层是通过<code>TCP</code>协议去通讯的**），然后<code>HTTP</code>协议生成针对目标 <code>Web </code>服务器的<code>HTTP</code>请求报文，通过 <code>TCP</code>、<code>IP</code> 等协议发送到目标 <code>Web</code> 服务器上</p>
+<hr>
+<hr>
+<h4 id="4-HTTP协议-应用层协议"><a href="#4-HTTP协议-应用层协议" class="headerlink" title="4.HTTP协议 (应用层协议)"></a>4.<code>HTTP</code>协议 (应用层协议)</h4><p>超文本传输协议（<code>Hypertext Transfer Protocol，HTTP</code>）是一个简单的请求 - 响应协议，它通常运行在<code>TCP</code> 之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。请求和响应消息的头以 <code>ASCII</code> 形式给出；而消息内容则具有一个类似 <code>MIME</code> 的格式。<code>HTTP</code>是万维网的数据通信的基础</p>
+<p><code>HTTP</code>的发展是由蒂姆·伯纳斯-李于1989年在欧洲核子研究组织（<code>CERN</code>）所发起。<code>HTTP</code>的标准制定由万维网协会（<code>World Wide Web Consortium，W3C</code>）和互联网工程任务组（<code>Internet Engineering TaskForce，IETF</code>）进行协调，最终发布了一系列的<code>RFC</code>，其中最著名的是1999年6月公布的<code> RFC 2616</code>，定义了<code>HTTP</code>协议中现今广泛使用的一个版本——<code>HTTP 1.1</code></p>
+<p><strong>概述</strong>：</p>
+<p><code>HTTP</code> 是一个客户端终端（用户）和服务器端（网站）请求和应答的标准（<code>TCP</code>）。通过使用网页浏览器、网络爬虫或者其它的工具，客户端发起一个<code>HTTP</code>请求到服务器上指定端口（默认端口为<code>80</code>）。我们称这个客户端为用户代理程序（<code>user agent</code>）。应答的服务器上存储着一些资源，比如 <code>HTML</code> 文件和图像。我们称这个应答服务器为源服务器（<code>origin server</code>）。在用户代理和源服务器中间可能存在多个“中间层”，比如代理服务器、网关或者隧道（<code>tunnel</code>）</p>
+<p>尽管 <code>TCP/IP</code> 协议是互联网上最流行的应用，<code>HTTP</code> 协议中，并没有规定必须使用它或它支持的层。事实上，<code>HTTP</code>可以在任何互联网协议上，或其他网络上实现。<code>HTTP</code> 假定其下层协议提供可靠的传输。因此，任何能够提供这种保证的协议都可以被其使用。因此也就是其在 <code>TCP/IP</code> 协议族使用 <code>TCP</code> 作为其传输层</p>
+<p>通常，由<code>HTTP</code>客户端发起一个请求，创建一个到服务器指定端口（默认是80端口）的<code>TCP</code>连接。<code>HTTP</code>服务器则在那个端口监听客户端的请求。一旦收到请求，服务器会向客户端返回一个状态，比如”<code>HTTP/1.1 200 OK</code>“，以及返回的内容，如请求的文件、错误消息、或者其它信息</p>
+<p>**工作原理(重点)**：</p>
+<p><code>HTTP</code> 协议定义<code>Web</code>客户端如何从 <code>Web </code>服务器请求 <code>Web </code>页面，以及服务器如何把<code>Web </code>页面传送给客户端。<code>HTTP </code>协议采用了<strong>请求&#x2F;响应模型</strong>。<strong>客户端向服务器发送一个请求报文，请求报文包含请求的方法、<code>URL</code>、协议版本、请求头部和请求数据。服务器以一个状态行作为响应，响应的内容包括协议的版本、成功或者错误代码、服务器信息、响应头部和响应数据</strong></p>
+<hr>
+<h5 id="（1）HTTP请求-x2F-响应的步骤"><a href="#（1）HTTP请求-x2F-响应的步骤" class="headerlink" title="（1）HTTP请求&#x2F;响应的步骤"></a>（1）HTTP请求&#x2F;响应的步骤</h5><ol>
+<li><p>客户端连接到<code>web</code>服务器</p>
+<ul>
+<li>一个<code>HTTP</code>客户端，通常是浏览器，与 <code>Web</code> 服务器的 <code>HTTP </code>端口（默认为<code>80</code>）建立一个 <code>TCP </code>套接字连接。例如，<a target="_blank" rel="noopener" href="http://www.baidu.com.(url)/">http://www.baidu.com。（URL）</a></li>
+</ul>
+</li>
+<li><p>发送<code>HTTP</code>请求</p>
+<ul>
+<li>通过 <code>TCP</code> 套接字，客户端向 <code>Web</code> 服务器发送一个文本的请求报文，<strong>一个请求报文由请求行、请求头部、空行和请求数据 <code>4</code> 部分组成</strong></li>
+</ul>
+</li>
+<li><p>服务器接受请求并返回<code>HTTP</code>响应</p>
+<ul>
+<li><code>Web</code> 服务器解析请求，定位请求资源。服务器将资源复本写到<code> TCP</code> 套接字，由客户端读取。<strong>一个响应由状态行、响应头部、空行和响应数据 <code>4</code> 部分组成</strong></li>
+</ul>
+</li>
+<li><p>释放连接<code>TCP</code>连接</p>
+<ul>
+<li>若<code>connection</code>模式为<code> close</code>，则服务器主动关闭 <code>TCP</code>连接，客户端被动关闭连接，释放<code>TCP</code>连接；若<code>connection</code> 模式为 <code>keepalive</code>，则该连接会保持一段时间，在该时间内可以继续接收请求</li>
+</ul>
+</li>
+<li><p>客户端浏览器解析<code>HTML</code>内容</p>
+<ul>
+<li><p>客户端浏览器首先解析状态行，查看表明请求是否成功的状态代码。然后解析每一个响应头，响应</p>
+<p>头告知以下为若干字节的 <code>HTML</code>文档和文档的字符集。客户端浏览器读取响应数据 <code>HTML</code>，根据</p>
+<p><code>HTML</code> 的语法对其进行格式化，并在浏览器窗口中显示</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>例如</strong>：在浏览器地址栏键入URL，按下回车之后会经历以下流程</p>
+<ol>
+<li>浏览器向<code>DNS</code>服务器请求解析该<code>URL</code>中域名所对应的<code>IP</code>地址</li>
+<li>解析出 <code>IP</code> 地址后，根据该<code>IP</code>地址和默认端口 80，和服务器建立 <code>TCP </code>连接</li>
+<li>浏览器发出读取文件（ <code>URL</code> 中域名后面部分对应的文件）的<code> HTTP</code> 请求，该请求报文作为 <code>TCP </code>三次握手的第三个报文的数据发送给服务器</li>
+<li>服务器对浏览器请求作出响应，并把对应的 <code>HTML</code> 文本发送给浏览器</li>
+<li>释放 <code>TCP</code> 连接</li>
+<li>浏览器将该 <code>HTML </code>文本并显示内容</li>
+</ol>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519112520.png" alt="image-20240519112520901"></p>
+<p><code>HTTP</code> 协议是基于 <code>TCP/IP </code>协议之上的应用层协议，<strong>基于 请求-响应 的模式</strong>。<code>HTTP </code>协议规定，请求从客户端发出，最后服务器端响应该请求并返回。换句话说，肯定是<strong>先从客户端开始建立通信的，服务器端在没有接收到请求之前不会发送响应</strong></p>
+<hr>
+<h5 id="（2）HTTP请求-x2F-响应报文格式"><a href="#（2）HTTP请求-x2F-响应报文格式" class="headerlink" title="（2）HTTP请求&#x2F;响应报文格式"></a>（2）HTTP请求&#x2F;响应报文格式</h5><p><strong>请求报文格式</strong>：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519112820.png" alt="image-20240519112820437"></p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519112837.png" alt="image-20240519112837555"></p>
+<p><strong>响应报文格式</strong>：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519112912.png" alt="image-20240519112912882"></p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519112921.png" alt="image-20240519112921058"></p>
+<hr>
+<h5 id="（3）HTPP请求方法"><a href="#（3）HTPP请求方法" class="headerlink" title="（3）HTPP请求方法"></a>（3）HTPP请求方法</h5><p><code>HTTP/1.1 </code>协议中共定义了八种方法（也叫“动作”）来以不同方式操作指定的资源：</p>
+<p>其中<code>GET、POST</code>方法是<code>web Server</code>常用的请求方法</p>
+<ol>
+<li><p>**<code>GET</code>**：向指定的资源发出“显示”请求。使用 <code>GET</code> 方法应该只用在读取数据，而不应当被用于产生“副作用”的操作中，例如在 <code>Web Application </code>中。其中一个原因是 <code>GET </code>可能会被网络蜘蛛等随意访问</p>
+</li>
+<li><p><code>HEAD</code>：与 <code>GET </code>方法一样，都是向服务器发出指定资源的请求。只不过服务器将不传回资源的本文部分。它的好处在于，使用这个方法可以在不必传输全部内容的情况下，就可以获取其中“关于该资源的信息”（元信息或称元数据）</p>
+</li>
+<li><p>**<code>POST</code>**：向指定资源提交数据，请求服务器进行处理（例如提交表单或者上传文件）。数据被包含在请求本文中。这个请求可能会创建新的资源或修改现有资源，或二者皆有</p>
+</li>
+<li><p><code>PUT</code>：向指定资源位置上传其最新内容</p>
+</li>
+<li><p><code> DELETE</code>：请求服务器删除 <code>Request-URI</code> 所标识的资源</p>
+</li>
+<li><p><code>TRACE</code>：回显服务器收到的请求，主要用于测试或诊断</p>
+</li>
+<li><p><code> OPTIONS</code>：这个方法可使服务器传回该资源所支持的所有 <code>HTTP</code> 请求方法。用’*’来代替资源名称，</p>
+<p>向 <code>Web</code> 服务器发送 <code>OPTIONS</code> 请求，可以测试服务器功能是否正常运作</p>
+</li>
+<li><p><code>CONNECT</code>：<code>HTTP/1.1</code> 协议中预留给能够将连接改为管道方式的代理服务器。通常用于<code>SSL</code>加密服务器的链接（经由非加密的 <code>HTTP</code> 代理服务器）</p>
+</li>
+</ol>
+<p>**<code>GET与POST请求方法区别</code>**：</p>
+<ol>
+<li>用途：<ul>
+<li><code>GET</code>：<strong>主要用于从服务器检索数据</strong>。GET请求应该是幂等的，这意味着多次执行同一请求应该得到相同的结果，并且<strong>不应当改变资源的状态</strong></li>
+<li><code>POST</code>：<strong>用于向服务器提交数据，通常是为了创建新的资源或更新现有资源</strong>。POST请求不是幂等的，多次执行同一POST请求可能会在服务器上创建多个资源或多次改变资源状态</li>
+</ul>
+</li>
+<li>数据发送方式：<ul>
+<li><code>GET</code>：将请求数据编码附加在URL中，形成查询字符串。这些数据通常可见，因为它们在URL中直接显示</li>
+<li><code>POST</code>：将数据作为请求的主体发送，不会在URL中显示。这允许POST请求发送更多的数据，因为它们不受URL长度限制，并且可以发送包括非ASCII字符在内的各种数据类型</li>
+</ul>
+</li>
+<li>安全性：<ul>
+<li><code>GET</code>：由于数据在<code>URL</code>中显示，因此更<strong>容易受到安全风险的影响</strong>。例如，敏感数据（如密码或个人信息）<strong>可能会被保存在浏览器历史或服务器日志中</strong></li>
+<li><code>POST</code>：<strong>相对较安全，因为数据不会显示在URL中。适合发送敏感或大量的数据</strong></li>
+</ul>
+</li>
+<li>缓存与历史：<ul>
+<li><code>GET</code>：可以被浏览器或其他中间件缓存，以提高某些请求的效率。<code>GET</code>请求的结果也会出现在浏览器的历史记录中。</li>
+<li><code>POST</code>：通常不被缓存，也不出现在浏览器历史记录中，因为<code>POST</code>请求可能修改服务器状态或数据。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h5 id="（4）HTTP状态码"><a href="#（4）HTTP状态码" class="headerlink" title="（4）HTTP状态码"></a>（4）HTTP状态码</h5><p>所有<code>HTTP</code>响应的第一行都是状态行，依次是当前<code>HTTP</code>版本号，3位数字组成的状态代码，以及描述状态的短语，彼此由空格分隔</p>
+<p>状态代码的第一个数字代表当前响应的类型：</p>
+<ul>
+<li><code>1xx</code>消息——请求已被服务器接收，继续处理</li>
+<li><code>2xx</code>成功——请求已成功被服务器接收、理解、并接受</li>
+<li><code>3xx</code>重定向——需要后续操作才能完成这一请求</li>
+<li><code>4xx</code>请求错误——请求含有词法错误或者无法被执行</li>
+<li><code>5xx</code>服务器错误——服务器在处理某个正确请求时发生错误</li>
+</ul>
+<p>虽然 <code>RFC 2616</code> 中已经推荐了描述状态的短语，例如”<code>200 OK&quot;，&quot;404 Not Found</code>“，但是<code>WEB</code>开发者仍然能够自行决定采用何种短语，用以显示本地化的状态描述或者自定义信息</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519113800.png" alt="image-20240519113800924"></p>
+<p>更多状态码信息：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/5053660?fr=aladdin">入口</a></p>
+<hr>
+<hr>
+<h4 id="5-DNS服务器"><a href="#5-DNS服务器" class="headerlink" title="5.DNS服务器"></a>5.DNS服务器</h4><p><code>DNS</code>服务器（域名系统服务器）是互联网上的一种关键技术服务，它<strong>负责将域名（如 <code>www.example.com</code>）转换成计算机可以理解的<code>IP</code>地址（如 <code>192.168.1.1</code>）</strong>。这种转换是必需的，因为虽然域名对于人类来说易于记忆和使用，但<strong>网络上的设备通过<code>IP</code>地址来识别和通信</strong></p>
+<p><code>DNS</code>服务器主要功能：</p>
+<ul>
+<li><strong>域名解析</strong>：这是<code>DNS</code>的主要功能，即解析域名到对应的<code>IP</code>地址。当你输入一个网址或通过你的应用访问互联网服务时，你的设备会向<code>DNS</code>服务器查询该域名的<code>IP</code>地址</li>
+<li><strong>域名记录管理</strong>：<code>DNS</code>服务器管理着不同类型的记录，如<code>A</code>记录（将域名指向<code>IPv4</code>地址）、<code>AAAA</code>记录（将域名指向<code>IPv6</code>地址）、<code>CNAME</code>记录（将域名指向另一个域名）、<code>MX</code>记录（邮件交换记录，用于邮件服务）等</li>
+<li><strong>负载均衡</strong>：通过<code>DNS</code>解析，可以实现对访问流量的分发，例如将访问请求分配给最近或响应时间最快的服务器</li>
+<li><strong>缓存</strong>：为了减少解析时间和减轻根服务器的负担，<code>DNS</code>服务器通常会缓存域名解析的结果。这意味着一旦一个域名被解析，它的记录会在<code>DNS</code>服务器上保留一段时间，使得同一请求在此期间可以更快地被响应</li>
+</ul>
+<hr>
+<hr>
+<h4 id="6-服务器编程框架"><a href="#6-服务器编程框架" class="headerlink" title="6.服务器编程框架"></a>6.服务器编程框架</h4><p>虽然服务器程序种类繁多，但其基本框架都一样，不同之处在于逻辑处理</p>
+<p><code>web</code>服务器的<strong>业务逻辑</strong>：解析客户端发送的<code>http</code>请求报文；根据请求报文的相关信息（<code>GET/POST</code>请求或者其他等）；服务器检索到客户端请求的资源（<strong>响应报文中的响应正文</strong>），并且封装组织<code>http</code>响应的报文，发送给客户端。</p>
+<p>服务器基本<strong>编程框架</strong>如下图：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519145430.png" alt="image-20240519145430317"></p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I&#x2F;O 处理单元</td>
+<td>处理客户连接，<strong>读写网络数据</strong></td>
+</tr>
+<tr>
+<td>逻辑单元</td>
+<td>业务进程或线程</td>
+</tr>
+<tr>
+<td>网络存储单元</td>
+<td>数据库、文件或缓存</td>
+</tr>
+<tr>
+<td>请求队列</td>
+<td>各单元之间的通信方式</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>IO处理单元</strong>：<strong>服务器管理客户连接的模块</strong>。它通常要完成以下工作：等待并接受新的客户连接，接收客户数据，将服务器响应数据返回给客户端。但是数据的收发不一定在 I&#x2F;O 处理单元中执行，也可能在逻辑单元中执行，具体在何处执行取决于事件处理模式</li>
+<li><strong>逻辑单元</strong>：一个逻辑单元通常是一个进程或线程。它分析并处理客户数据，然后将结果传递给 <code>I/O</code> 处理单元或者直接发送给客户端（具体使用哪种方式取决于事件处理模式）。服务器通常拥有多个逻辑单元，以实现对多个客户任务的并发处理</li>
+<li><strong>网络存储单元</strong>：可以是数据库、缓存和文件，但不是必须的</li>
+<li><strong>请求队列</strong>：请求队列是各单元之间的通信方式的抽象。<code>I/O</code> 处理单元接收到客户请求时，需要以某种方式通知一个逻辑单元来处理该请求。同样，多个逻辑单元同时访问一个存储单元时，也需要采用某种机制来协调处理竞态条件。请求队列通常被实现为池（线程池&#x2F;进程池）的一部分</li>
+</ul>
+<hr>
+<hr>
+<h4 id="7-两种高效的事件处理模式"><a href="#7-两种高效的事件处理模式" class="headerlink" title="7.两种高效的事件处理模式"></a>7.两种高效的事件处理模式</h4><p>服务器程序通常需要处理三类事件：<code>I/O</code> 事件、信号及定时事件。有两种高效的事件处理模式：<code>Reactor(反应堆)</code>和 <code>Proactor(前摄器)</code>，<strong>同步 <code>I/O</code> 模型通常用于实现 <code>Reactor</code> 模式，异步<code>I/O</code>模型通常用于实现<code>Proactor</code>模式</strong></p>
+<ul>
+<li><strong><code>Reactor</code> 是非阻塞同步网络模式，感知的是就绪可读写事件</strong>。在每次感知到有事件发生（比如可读就绪事件）后，就需要应用进程主动调用 <code>read</code> 方法来完成数据的读取，也就是要应用进程主动将 <code>socket </code>接收缓存中的数据读到应用进程内存中，这个过程是同步的，读取完数据后应用进程才能处理数据。<strong>Reactor 可以理解为「来了事件操作系统通知应用进程，让应用进程来处理」</strong></li>
+<li><strong><code>Proactor </code>是异步网络模式， 感知的是已完成的读写事件</strong>。在发起异步读写请求时，需要传入数据缓冲区的地址（用来存放结果数据）等信息，这样系统内核才可以自动帮我们把数据的读写工作完成，这里的读写工作全程由操作系统来做，并不需要像 <code>Reactor</code> 那样还需要应用进程主动发起 <code>read/write </code>来读写数据，操作系统完成读写工作后，就会通知应用进程直接处理数据。**<code>Proactor </code>可以理解为「来了事件操作系统来处理，处理完再通知应用进程」**</li>
+</ul>
+<h5 id="（1）Reactor模式"><a href="#（1）Reactor模式" class="headerlink" title="（1）Reactor模式"></a>（1）Reactor模式</h5><p>要求主线程（<code>I/O</code>处理单元）<strong>只负责监听文件描述符上是否有事件发生</strong>，有的话就立即将该事件通知工作线程（逻辑单元），将 <code>socket </code>可读可写事件放入请求队列，交给工作线程处理。除此之外，主线程不做任何其他实质性的工作。读写数据，接受新的连接，以及处理客户请求均在工作线程中完成</p>
+<p>使用同步 <code>I/O</code>（以<code>epoll_wait</code>为例）实现的 <code>Reactor </code>模式的工作流程是：</p>
+<ol>
+<li>主线程往<code> epoll</code> 内核事件表中注册 <code>socket </code>上的读就绪事件</li>
+<li>主线程调用<code>epoll_wait</code>等待 <code>socket</code> 上有数据可读</li>
+<li>当 <code>socket </code>上有数据可读时， <code>epoll_wait </code>通知主线程。主线程则将 <code>socket </code>可读事件放入请求队列</li>
+<li>睡眠在请求队列上的某个工作线程被唤醒，它从 <code>socket</code> 读取数据，并处理客户请求，然后往 <code>epoll</code>内核事件表中注册该 <code>socket </code>上的写就绪事件</li>
+<li>当主线程调用<code> epoll_wait</code> 等待 <code>socket </code>可写</li>
+<li>当 <code>socket</code> 可写时，<code>epoll_wait</code> 通知主线程。主线程将 <code>socket</code> 可写事件放入请求队列</li>
+<li>睡眠在请求队列上的某个工作线程被唤醒，它往<code>socket</code>上写入服务器处理客户请求的结果</li>
+</ol>
+<p><strong><code>Reactor</code>模式工作流程</strong>：</p>
+<p>主线程，只负责监听<code>epoll</code>实例中的文件描述符是否有事件发生，工作子线程需要负责<code>I/O</code>数据读写，以及业务逻辑</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519155954.png" alt="image-20240519155954565"></p>
+<hr>
+<h5 id="（2）Proactor模式"><a href="#（2）Proactor模式" class="headerlink" title="（2）Proactor模式"></a>（2）Proactor模式</h5><p><code>Proactor </code>模式将所有<code>I/O</code>操作都交给主线程和内核来处理（进行读、写），工作线程仅仅负责业务逻辑。使用异步<code>I/O</code>模型（以 <code>aio_read</code> 和 <code>aio_write</code> 为例）实现的<code>Proactor</code>模式的工作流程是：</p>
+<ol>
+<li>主线程调用<code> aio_read</code> 函数向内核注册 <code>socket </code>上的读完成事件，并告诉内核用户读缓冲区的位置，以及读操作完成时如何通知应用程序（这里以信号为例）</li>
+<li>主线程继续处理其他逻辑</li>
+<li>当 <code>socket </code>上的数据被读入用户缓冲区后，内核将向应用程序发送一个信号，以通知应用程序数据已经可用</li>
+<li>应用程序预先定义好的信号处理函数选择一个工作线程来处理客户请求。工作线程处理完客户请求后，调用 <code>aio_write</code> 函数向内核注册 <code>socket </code>上的写完成事件，并告诉内核用户写缓冲区的位置，以及写操作完成时如何通知应用程序</li>
+<li>主线程继续处理其他逻辑</li>
+<li>当用户缓冲区的数据被写入 <code>socket </code>之后，内核将向应用程序发送一个信号，以通知应用程序数据已经发送完毕</li>
+<li>应用程序预先定义好的信号处理函数选择一个工作线程来做善后处理，比如决定是否关闭 <code>socket</code></li>
+</ol>
+<p><strong>Proactor模式工作流程</strong>：</p>
+<p>主线程负责循环监听<code>epoll</code>实例上的文件描述符事件，并且发起异步<code>I/O</code>操作（如文件读写、网络数据发送接收等）和指定完成处理器（<code>Completion Handlers</code>），设置完成处理器是关键步骤，因为<strong>这些处理器定义了当<code>I/O</code>操作完成时将执行的回调函数或操作</strong>；<strong>内核负责<code>I/O</code>数据的读写，当<code>I/O</code>操作完成时，内核将通知应用程序</strong>。这种通知通常是通过预设的回调函数或事件机制实现的；<strong>工作线程负责业务的处理逻辑（数据处理、数据验证、数据转换等业务逻辑）</strong></p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519160630.png" alt="image-20240519160630512"></p>
+<hr>
+<h5 id="（3）使用同步IO模拟Proactor模式"><a href="#（3）使用同步IO模拟Proactor模式" class="headerlink" title="（3）使用同步IO模拟Proactor模式"></a>（3）使用同步IO模拟Proactor模式</h5><p>使用同步<code>I/O</code>方式模拟出 <code>Proactor</code> 模式，<strong>原理</strong>是：主线程执行数据读写操作，读写完成之后，主线程向工作线程通知这一”完成事件“。那么从工作线程的角度来看，它们就直接获得了数据读写的结果，接下来要做的只是对读写的结果进行逻辑处理</p>
+<p>使用同步<code>I/O</code>模型（以<code> epoll_wait</code>为例）模拟出的<code>Proactor</code>模式的工作流程如下：</p>
+<ol>
+<li>主线程往 <code>epoll </code>内核事件表中注册<code>socket</code>上的读就绪事件</li>
+<li>主线程调用 <code>epoll_wait</code> 等待 socket 上有数据可读</li>
+<li>当 <code>socket</code> 上有数据可读时，<code>epoll_wait </code>通知主线程。主线程从 <code>socket </code>循环读取数据，直到没有更多数据可读，然后将读取到的数据封装成一个请求对象并插入请求队列</li>
+<li>睡眠在请求队列上的某个工作线程被唤醒，它获得请求对象并处理客户请求，然后往<code>epoll</code>内核事件表中注册 <code>socket </code>上的写就绪事件</li>
+<li>主线程调用 <code>epoll_wait </code>等待<code>socket</code>可写</li>
+<li>当<code>socket</code>可写时，<code>epoll_wait </code>通知主线程。主线程往 <code>socket </code>上写入服务器处理客户请求的结果</li>
+</ol>
+<p><strong>同步 I&#x2F;O 模拟 Proactor 模式的工作流程</strong>：</p>
+<p>主线程负责<code>epoll</code>实例中的文件描述符监听，以及<code>IO</code>的读写操作；而工作线程仅仅负责业务处理逻辑</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240519162654.png" alt="image-20240519162654114"></p>
+<hr>
+<h5 id="（4）其他博客入口-重点"><a href="#（4）其他博客入口-重点" class="headerlink" title="（4）其他博客入口 (重点)"></a>（4）其他博客入口 (重点)</h5><p>​	<a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/266248?utm_source=zhihu&utm_medium=bbs-ex&utm_campaign=other&utm_content=content">华为云高性能网络模式Reactor与Proactor详解</a></p>
+<hr>
+<hr>
+<h4 id="8-线程池"><a href="#8-线程池" class="headerlink" title="8.线程池"></a>8.线程池</h4><p>线程池是由服务器预先创建的一组子线程，<strong>线程池中的线程数量应该和 CPU 数量差不多</strong>。线程池中的所有子线程都运行着相同的代码。当有新的任务到来时，主线程将通过某种方式选择线程池中的某一个子线程来为之服务。<strong>相比与动态的创建子线程，选择一个已经存在的子线程的代价显然要小得多</strong>。至于主线程选择哪个子线程来为新任务服务，则有多种方式：</p>
+<ul>
+<li>主线程使用某种算法来主动选择子线程。最简单、最常用的算法是<code>随机算法</code>和 <code>Round Robin</code>（轮流选取）算法，但更优秀、更智能的算法将使任务在各个工作线程中更均匀地分配，从而减轻服务器的整体压力</li>
+<li>主线程和所有子线程通过一个共享的工作队列来同步，子线程都睡眠在该工作队列上。当有新的任务到来时，主线程将任务添加到工作队列中。这将唤醒正在等待任务的子线程，不过只有一个子线程将获得新任务的”接管权“，它可以从工作队列中取出任务并执行之，而其他子线程将继续睡眠在工作队列上</li>
+</ul>
+<p><strong>线程池的一般模型为</strong>：</p>
+<p><img src="https://gitee.com/zhou-xuezhi/mypic2/raw/master/img/20240520101705.png" alt="image-20240520101705138"></p>
+<blockquote>
+<p>线程池中的线程数量最直接的限制因素是中央处理器(<code>CPU</code>)的处理器(<code>processors/cores</code>)的数量<code>N</code> ：如果你的<code>CPU</code>是<code>4-cores</code>的，对于<code>CPU</code>密集型的任务(如视频剪辑等消耗<code>CPU</code>计算资源的任务)来说，那线程池中的线程数量最好也设置为<code>4</code>（或者<code>+1</code>防止其他因素造成的线程阻塞）；对于<code>IO</code>密集型的任务，一般要多于<code>CPU</code>的核数，因为线程间竞争的不是<code>CPU</code>的计算资源而是<code>IO</code>，<code>IO</code>的处理一般较慢，多于<code>cores</code>数的线程将为CPU争取更多的任务，不至在线程处理<code>IO</code>的过程造成<code>CPU</code>空闲导致资源浪费</p>
+</blockquote>
+<ul>
+<li>空间换时间，浪费服务器的硬件资源，换取运行效率</li>
+<li>池是一组资源的集合，这组资源在服务器启动之初就被完全创建好并初始化，这称为静态资源</li>
+<li>当服务器进入正式运行阶段，开始处理客户请求的时候，如果它需要相关的资源，可以直接从池中获取，无需动态分配</li>
+<li>当服务器处理完一个客户连接后，可以把相关的资源放回池中，无需执行系统调用释放资源</li>
+</ul>
+<hr>
+<hr>
+<h4 id="9-epoll中事件标志EPOLLRDHUP"><a href="#9-epoll中事件标志EPOLLRDHUP" class="headerlink" title="9.epoll中事件标志EPOLLRDHUP"></a>9.<code>epoll</code>中事件标志<code>EPOLLRDHUP</code></h4><p><code>EPOLLRDHUP</code>是一个事件标志，它是用来监控套接字上的对端关闭（half-close）或者完全关闭连接的情况</p>
+<p>**解释 **：</p>
+<ul>
+<li>**<code>EPOLLRDHUP</code>**：这个标志表示对端套接字已经关闭写操作或者完全关闭了连接。在TCP连接中，这通常对应于收到FIN包，意味着对端关闭了连接的发送方向，但可能仍能接收数据</li>
+</ul>
+<p>为什么需要将事件设置为 <code>EPOLLRDHUP</code>:</p>
+<ul>
+<li>使用<code>EPOLLRDHUP</code>的主要优点是能更精确地检测对端是否关闭了连接，而不仅仅依赖于读操作返回0（EOF）来判断。这可以让应用程序更加灵活地处理半关闭的状态，即对端关闭了写操作但仍然可以接收数据的情况</li>
+</ul>
+<hr>
+<hr>
+<h4 id="10-epoll中事件标志EPOLLONESHOT"><a href="#10-epoll中事件标志EPOLLONESHOT" class="headerlink" title="10.epoll中事件标志EPOLLONESHOT"></a>10.<code>epoll</code>中事件标志<code>EPOLLONESHOT</code></h4><p>即使可以使用 <code>ET</code> 模式，一个<code>socket</code> 上的某个事件还是可能被触发多次。这在并发程序中就会引起一个问题。比如一个线程在读取完某个<code> socket</code> 上的数据后开始处理这些数据，而在数据的处理过程中该<code>socket</code> 上又有新数据可读（<code>EPOLLIN</code> 再次被触发），此时另外一个线程被唤醒来读取这些新的数据。于是就出现了两个线程同时操作一个 <code>socket </code>的局面。一个<code>socket</code>连接在任一时刻都只被一个线程处理，可以使用 <code>epoll </code>的<code>EPOLLONESHOT</code>事件实现</p>
+<p>对于注册了 <code>EPOLLONESHOT</code> 事件的文件描述符，操作系统最多触发其上注册的一个可读、可写或者异常事件，且只触发一次，除非我们使用 <code>epoll_ctl</code> 函数重置该文件描述符上注册的 <code>EPOLLONESHOT</code> 事件。这样，当一个线程在处理某个 socket 时，其他线程是不可能有机会操作该 socket 的。但反过来思考，注册了<code> EPOLLONESHOT</code> 事件的<code> socket</code> 一旦被某个线程处理完毕， 该线程就应该立即重置这个<code>socket</code> 上的<code>EPOLLONESHOT</code>事件，以确保这个 <code>socket</code> 下一次可读时，其 <code>EPOLLIN </code>事件能被触发，进而让其他工作线程有机会继续处理这个<code> socket</code></p>
+<hr>
+<hr>
+<h4 id="11-有限状态机"><a href="#11-有限状态机" class="headerlink" title="11.有限状态机"></a>11.有限状态机</h4><p>逻辑单元内部的一种高效编程方法：有限状态机（finite state machine）。有的应用层协议头部包含数据包类型字段，每种类型可以映射为逻辑单元的一种执行状态，服务器可以根据它来编写相应的处理逻辑。如下是一种状态独立的有限状态机：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">STATE_MACHINE( Package _pack )</span><br><span class="line">&#123;</span><br><span class="line">    PackageType _type = _pack.GetType();</span><br><span class="line">    <span class="keyword">switch</span>( _type )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">case</span> type_A:</span><br><span class="line">            process_package_A( _pack );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> type_B:</span><br><span class="line">            process_package_B( _pack );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是一个简单的有限状态机，只不过该状态机的每个状态都是相互独立的，即状态之间没有相互转移。状态之间的转移是需要状态机内部驱动，如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">STATE_MACHINE()</span><br><span class="line">&#123;</span><br><span class="line">    State cur_State = type_A;</span><br><span class="line">    <span class="keyword">while</span>( cur_State != type_C )</span><br><span class="line">    &#123;</span><br><span class="line">        Package _pack = getNewPackage();</span><br><span class="line">        <span class="keyword">switch</span>( cur_State )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> type_A:</span><br><span class="line">                process_package_state_A( _pack );</span><br><span class="line">                cur_State = type_B;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> type_B:</span><br><span class="line">                process_package_state_B( _pack );</span><br><span class="line">                cur_State = type_C;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该状态机包含三种状态：type_A、type_B 和 type_C，其中 type_A 是状态机的开始状态，type_C 是状态机的结束状态。状态机的当前状态记录在 cur_State 变量中。在一趟循环过程中，状态机先通过getNewPackage 方法获得一个新的数据包，然后根据 cur_State 变量的值判断如何处理该数据包。数据包处理完之后，状态机通过给 cur_State 变量传递目标状态值来实现状态转移。那么当状态机进入下一趟循环时，它将执行新的状态对应的逻辑</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://maxswordsman.github.io">Maxswordsman</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://maxswordsman.github.io/2024/01/21/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/%E7%89%9B%E5%AE%A2WebServer%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/">https://maxswordsman.github.io/2024/01/21/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/%E7%89%9B%E5%AE%A2WebServer%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://maxswordsman.github.io" target="_blank">Maxswordsman</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/">项目开发</a></div><div class="post_share"><div class="social-share" data-image="/image/head2.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/01/31/%E5%B5%8C%E5%85%A5%E5%BC%8F/C/UNIX%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B-%E9%AB%98%E7%BA%A7IO%EF%BC%8812%EF%BC%89/" title="UNIX环境编程-高级IO（12）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">UNIX环境编程-高级IO（12）</div></div></a></div><div class="next-post pull-right"><a href="/2024/01/20/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/%E9%AB%98%E6%80%A7%E8%83%BD%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" title="高性能网络模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">高性能网络模型</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/05/15/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/IPV4%E6%B5%81%E5%AA%92%E4%BD%93/IPV4%E6%B5%81%E5%AA%92%E4%BD%93%E9%A1%B9%E7%9B%AE-%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90/" title="IPV4流媒体网络多播-代码解析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-15</div><div class="title">IPV4流媒体网络多播-代码解析</div></div></a></div><div><a href="/2024/05/14/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/IPV4%E6%B5%81%E5%AA%92%E4%BD%93/IPV4%E6%B5%81%E5%AA%92%E4%BD%93%E9%A1%B9%E7%9B%AE-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86/" title="IPV4流媒体网络多播-前置知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-14</div><div class="title">IPV4流媒体网络多播-前置知识</div></div></a></div><div><a href="/2024/01/20/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/WebServerC++/%E9%AB%98%E6%80%A7%E8%83%BD%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" title="高性能网络模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-20</div><div class="title">高性能网络模型</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/head2.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Maxswordsman</div><div class="author-info__description">不颓好胜之心</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/maxswordsman"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/maxswordsman" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2723937292@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://gitee.com/zhou-xuezhi" target="_blank" title="Gitee"><i class="iconfont  icon-gitee" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%9B%E5%AE%A2WebServer%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98"><span class="toc-text">牛客WebServer项目实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">一、知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%BC%82%E6%AD%A5IO"><span class="toc-text">1.异步IO</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%98%AF%E5%90%8C%E6%AD%A5%E7%9A%84"><span class="toc-text">（1）IO多路复用是同步的</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-UNIX-Linux%E4%B8%8A%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B"><span class="toc-text">2.UNIX&#x2F;Linux上五种IO模型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E9%98%BB%E5%A1%9EIO-blocking"><span class="toc-text">（1）阻塞IO (blocking)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E9%9D%9E%E9%98%BB%E5%A1%9EIO-non-blocking-NIO"><span class="toc-text">（2）非阻塞IO (non-blocking) NIO</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%883%EF%BC%89IO%E5%A4%8D%E7%94%A8-IO-multiplexing"><span class="toc-text">（3）IO复用 (IO multiplexing)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8-signal-driven"><span class="toc-text">（4）信号驱动 (signal-driven)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E5%BC%82%E6%AD%A5-asynchronous"><span class="toc-text">（5）异步 (asynchronous)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-web-Server-%E7%BD%91%E9%A1%B5%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">3.web Server (网页服务器)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-HTTP%E5%8D%8F%E8%AE%AE-%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="toc-text">4.HTTP协议 (应用层协议)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89HTTP%E8%AF%B7%E6%B1%82-x2F-%E5%93%8D%E5%BA%94%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toc-text">（1）HTTP请求&#x2F;响应的步骤</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89HTTP%E8%AF%B7%E6%B1%82-x2F-%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F"><span class="toc-text">（2）HTTP请求&#x2F;响应报文格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%883%EF%BC%89HTPP%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-text">（3）HTPP请求方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%884%EF%BC%89HTTP%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-text">（4）HTTP状态码</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-DNS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">5.DNS服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B%E6%A1%86%E6%9E%B6"><span class="toc-text">6.服务器编程框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E4%B8%A4%E7%A7%8D%E9%AB%98%E6%95%88%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="toc-text">7.两种高效的事件处理模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89Reactor%E6%A8%A1%E5%BC%8F"><span class="toc-text">（1）Reactor模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89Proactor%E6%A8%A1%E5%BC%8F"><span class="toc-text">（2）Proactor模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E4%BD%BF%E7%94%A8%E5%90%8C%E6%AD%A5IO%E6%A8%A1%E6%8B%9FProactor%E6%A8%A1%E5%BC%8F"><span class="toc-text">（3）使用同步IO模拟Proactor模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E5%85%B6%E4%BB%96%E5%8D%9A%E5%AE%A2%E5%85%A5%E5%8F%A3-%E9%87%8D%E7%82%B9"><span class="toc-text">（4）其他博客入口 (重点)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-text">8.线程池</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-epoll%E4%B8%AD%E4%BA%8B%E4%BB%B6%E6%A0%87%E5%BF%97EPOLLRDHUP"><span class="toc-text">9.epoll中事件标志EPOLLRDHUP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-epoll%E4%B8%AD%E4%BA%8B%E4%BB%B6%E6%A0%87%E5%BF%97EPOLLONESHOT"><span class="toc-text">10.epoll中事件标志EPOLLONESHOT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="toc-text">11.有限状态机</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Maxswordsman</div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer type="text/javascript" src="https://cdn1.tianli0.top/npm/sweetalert2@8.19.0/dist/sweetalert2.all.js"></script><script defer src="/js/lunar.js"></script><script defer src="/js/day.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body></html>
