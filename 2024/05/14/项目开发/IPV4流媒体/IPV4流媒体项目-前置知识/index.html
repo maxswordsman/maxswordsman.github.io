@@ -334,19 +334,19 @@ if (true) {
 
 <p>参数：</p>
 <ul>
-<li><strong><code>argc</code></strong> 和 **<code>argv</code>**：这是从 <code>main</code> 函数传递的参数数量和参数值数组，分别表示命令行参数的个数和参数数组。</li>
-<li>**<code>optstring</code>**：这是一个包含合法选项字符的字符串。如果一个字符后面跟随一个冒号 (<code>:</code>)，那么它需要一个参数（例如 <code>&quot;a:b:&quot;</code> 表示选项 <code>-a</code> 和 <code>-b</code> 都需要参数）。</li>
-<li>**<code>longopts</code>**：一个指向 <code>option</code> 结构数组的指针，用于定义长选项。</li>
-<li>**<code>longindex</code>**：一个指向整数的指针，用于存储当前解析的长选项在 <code>longopts</code> 数组中的索引。</li>
+<li><code>argc</code> 和 <code>argv</code>：这是从 <code>main</code> 函数传递的参数数量和参数值数组，分别表示命令行参数的个数和参数数组。</li>
+<li><code>optstring</code>：这是一个包含合法选项字符的字符串。如果一个字符后面跟随一个冒号 (<code>:</code>)，那么它需要一个参数（例如 <code>&quot;a:b:&quot;</code> 表示选项 <code>-a</code> 和 <code>-b</code> 都需要参数）。</li>
+<li><code>longopts</code>：一个指向 <code>option</code> 结构数组的指针，用于定义长选项。</li>
+<li><code>longindex</code>：一个指向整数的指针，用于存储当前解析的长选项在 <code>longopts</code> 数组中的索引。</li>
 </ul>
 <p><code>option</code>结构体定义</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">option</span> &#123;</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *name;   <span class="comment">// 长选项名</span></span><br><span class="line">    <span class="type">int</span> has_arg;        <span class="comment">// 选项是否需要参数</span></span><br><span class="line">    <span class="type">int</span> *flag;          <span class="comment">// 如何返回值：NULL表示返回val，非NULL表示返回0并设置flag指向的变量为val</span></span><br><span class="line">    <span class="type">int</span> val;            <span class="comment">// 选项短名称或返回值</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>**<code>name</code>**：长选项的名称（例如 <code>&quot;help&quot;</code>）。</li>
-<li>**<code>has_arg</code>**：这个选项是否需要参数，可能的值为 <code>no_argument</code>、<code>required_argument</code> 或 <code>optional_argument</code>。</li>
-<li>**<code>flag</code>**：如果不为 NULL，则 <code>getopt_long</code> 返回 0，并且将 <code>val</code> 的值存入 <code>flag</code> 指向的变量。如果为 NULL，<code>getopt_long</code> 直接返回 <code>val</code>。</li>
-<li>**<code>val</code>**：用于指定函数找到该选项时返回的值，或者是相对应的短选项字符。</li>
+<li><code>name</code>：长选项的名称（例如 <code>&quot;help&quot;</code>）。</li>
+<li><code>has_arg</code>：这个选项是否需要参数，可能的值为 <code>no_argument</code>、<code>required_argument</code> 或 <code>optional_argument</code>。</li>
+<li><code>flag</code>：如果不为 NULL，则 <code>getopt_long</code> 返回 0，并且将 <code>val</code> 的值存入 <code>flag</code> 指向的变量。如果为 NULL，<code>getopt_long</code> 直接返回 <code>val</code>。</li>
+<li><code>val</code>：用于指定函数找到该选项时返回的值，或者是相对应的短选项字符。</li>
 </ul>
 <hr>
 <h5 id="3-if-nametoindex"><a href="#3-if-nametoindex" class="headerlink" title="(3) if_nametoindex()"></a>(3) if_nametoindex()</h5><p><code>if_nametoindex()</code> 是一个用于将网络接口名称转换为相应的索引号的标准库函数</p>
@@ -354,7 +354,7 @@ if (true) {
 
 <p>参数：</p>
 <ul>
-<li>**<code>ifname</code>**：指向要查找索引的网络接口名称的字符串</li>
+<li><code>ifname</code>：指向要查找索引的网络接口名称的字符串</li>
 </ul>
 <p>返回值：</p>
 <ul>
@@ -398,8 +398,8 @@ if (true) {
 
 <p>如果 <code>execl()</code> 调用成功，它将执行 <code>ls</code> 命令来列出当前目录的内容，并且之后的 <code>perror()</code> 和 <code>return</code> 语句将不会执行</p>
 <p>在实例中，<code>&quot;/bin/ls&quot;</code> 是 <code>execl</code> 函数中指定的程序的路径。它指向要执行的程序文件在文件系统中的确切位置。这里的 <code>/bin/ls</code> 是Unix和类Unix操作系统中 <code>ls</code> 命令的标准位置。<code>ls</code> 命令用于列出目录内容</p>
-<p>**<code>/bin/</code>**：这是许多Unix和类Unix系统中用于存放基本用户二进制文件的标准目录。这些二进制文件通常是系统操作所必需的，包括如 <code>ls</code>、<code>cat</code>、<code>mv</code> 等常用命令</p>
-<p>**<code>ls</code>**：这是一个程序，用于列出计算机文件系统中目录的内容。在此实例中，<code>ls</code> 被用来显示当前工作目录下的所有文件和子目录</p>
+<p><code>/bin/</code>：这是许多Unix和类Unix系统中用于存放基本用户二进制文件的标准目录。这些二进制文件通常是系统操作所必需的，包括如 <code>ls</code>、<code>cat</code>、<code>mv</code> 等常用命令</p>
+<p><code>ls</code>：这是一个程序，用于列出计算机文件系统中目录的内容。在此实例中，<code>ls</code> 被用来显示当前工作目录下的所有文件和子目录</p>
 <p><strong>使用注意</strong>：</p>
 <p>由于 <code>execl()</code> 替换了当前进程的内容，<strong>它通常在创建了一个子进程（通过 <code>fork()</code>）之后使用</strong>，这样父进程可以继续执行，而子进程则加载并运行新的程序。如果直接在父进程中使用 <code>execl()</code> 而没有先进行 <code>fork()</code>，那么一旦 <code>execl()</code> 调用成功，原始的父进程将不存在，被新程序取代</p>
 <hr>
@@ -457,12 +457,12 @@ if (true) {
 
 <p>参数：</p>
 <ul>
-<li>**<code>req</code>**：指向 <code>timespec</code> 结构的指针，该结构指定了要暂停的时间长度。<code>timespec</code> 结构如下定义：</li>
+<li><code>req</code>：指向 <code>timespec</code> 结构的指针，该结构指定了要暂停的时间长度。<code>timespec</code> 结构如下定义：</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">timespec</span> &#123;</span></span><br><span class="line">    <span class="type">time_t</span> tv_sec;  <span class="comment">// 秒</span></span><br><span class="line">    <span class="type">long</span>   tv_nsec; <span class="comment">// 纳秒</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>**<code>rem</code>**：如果非 <code>NULL</code>，则在函数返回时，此结构会被设置为未睡完的剩余时间。这通常在 <code>nanosleep</code> 被信号打断时发生，允许程序决定是否重新开始剩余的睡眠时间</li>
+<li><code>rem</code>：如果非 <code>NULL</code>，则在函数返回时，此结构会被设置为未睡完的剩余时间。这通常在 <code>nanosleep</code> 被信号打断时发生，允许程序决定是否重新开始剩余的睡眠时间</li>
 </ul>
 <p>返回值：</p>
 <ul>
@@ -478,8 +478,8 @@ if (true) {
 
 <p>参数：</p>
 <ul>
-<li>**<code>once_control</code>**：指向 <code>pthread_once_t</code> 类型的变量的指针，该变量必须使用 <code>PTHREAD_ONCE_INIT</code> 初始化。这个变量跟踪初始化函数是否已被调用</li>
-<li>**<code>init_routine</code>**：指向要执行的初始化函数的指针。这个函数没有参数和返回值。<code>pthread_once</code> 会确保这个函数只被执行一次</li>
+<li><code>once_control</code>：指向 <code>pthread_once_t</code> 类型的变量的指针，该变量必须使用 <code>PTHREAD_ONCE_INIT</code> 初始化。这个变量跟踪初始化函数是否已被调用</li>
+<li><code>init_routine</code>：指向要执行的初始化函数的指针。这个函数没有参数和返回值。<code>pthread_once</code> 会确保这个函数只被执行一次</li>
 </ul>
 <p>返回：</p>
 <ul>
@@ -495,10 +495,10 @@ if (true) {
 
 <p>参数:</p>
 <ul>
-<li>**<code>pattern</code>**：用于文件匹配的模式，可以包含通配符。</li>
-<li>**<code>flags</code>**：控制函数行为的标志，可以通过位或运算符 <code>|</code> 组合多个标志。</li>
-<li>**<code>errfunc</code>**：一个回调函数，当 <code>glob()</code> 遇到不能读取的路径时调用。这个函数接受两个参数：导致错误的路径和对应的 <code>errno</code> 值。如果此函数返回非零值，则 <code>glob()</code> 将停止处理并返回。</li>
-<li>**<code>pglob</code>**：一个指向 <code>glob_t</code> 结构的指针，该结构用于存储匹配到的文件名和其他相关信息。</li>
+<li><code>pattern</code>：用于文件匹配的模式，可以包含通配符。</li>
+<li><code>flags</code>：控制函数行为的标志，可以通过位或运算符 <code>|</code> 组合多个标志。</li>
+<li><code>errfunc</code>：一个回调函数，当 <code>glob()</code> 遇到不能读取的路径时调用。这个函数接受两个参数：导致错误的路径和对应的 <code>errno</code> 值。如果此函数返回非零值，则 <code>glob()</code> 将停止处理并返回。</li>
+<li><code>pglob</code>：一个指向 <code>glob_t</code> 结构的指针，该结构用于存储匹配到的文件名和其他相关信息。</li>
 </ul>
 <p>常用的flags:</p>
 <ul>
@@ -517,10 +517,10 @@ if (true) {
 
 <p>字段说明：</p>
 <ul>
-<li>**<code>gl_pathc</code>**：表示匹配到的路径数量，即 <code>gl_pathv</code> 数组中存储的文件名个数。</li>
-<li>**<code>gl_pathv</code>**：是一个指向字符串数组的指针，每个字符串都是一个与指定模式匹配的文件路径。</li>
-<li>**<code>gl_offs</code>**：在 <code>gl_pathv</code> 数组的开头保留的未使用槽的数量，这可以用于将一些特定的数据存放在路径数组的前面。</li>
-<li>**<code>gl_flags</code>**：用于存储标志位，这些标志在调用 <code>glob()</code> 时指定，以控制函数的行为</li>
+<li><code>gl_pathc</code>：表示匹配到的路径数量，即 <code>gl_pathv</code> 数组中存储的文件名个数。</li>
+<li><code>gl_pathv</code>：是一个指向字符串数组的指针，每个字符串都是一个与指定模式匹配的文件路径。</li>
+<li><code>gl_offs</code>：在 <code>gl_pathv</code> 数组的开头保留的未使用槽的数量，这可以用于将一些特定的数据存放在路径数组的前面。</li>
+<li><code>gl_flags</code>：用于存储标志位，这些标志在调用 <code>glob()</code> 时指定，以控制函数的行为</li>
 </ul>
 <p>实例：搜索当前目录下所有的<code>.txt</code>文件</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;glob.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">glob_t</span> results;</span><br><span class="line">    <span class="type">int</span> ret = glob(<span class="string">&quot;*.txt&quot;</span>, <span class="number">0</span>, <span class="literal">NULL</span>, &amp;results);  <span class="comment">// 查找所有 .txt 文件</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ret == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; results.gl_pathc; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, results.gl_pathv[i]);</span><br><span class="line">        &#125;</span><br><span class="line">         <span class="comment">// globfree() 来释放为 glob_t 结构分配的内存</span></span><br><span class="line">        globfree(&amp;results);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ret == GLOB_NOMATCH) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;No .txt files found.\n&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;An error occurred.\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -531,9 +531,9 @@ if (true) {
 
 <p>参数：</p>
 <ul>
-<li>**<code>dest</code>**：指向目标内存区域的指针，这块内存将接收数据。</li>
-<li>**<code>src</code>**：指向源内存区域的指针，将从这里复制数据。</li>
-<li>**<code>n</code>**：要复制的字节数。</li>
+<li><code>dest</code>：指向目标内存区域的指针，这块内存将接收数据。</li>
+<li><code>src</code>：指向源内存区域的指针，将从这里复制数据。</li>
+<li><code>n</code>：要复制的字节数。</li>
 </ul>
 <p>返回值：</p>
 <ul>
@@ -545,10 +545,10 @@ if (true) {
 
 <p>参数：</p>
 <ul>
-<li>**<code>fd</code>**：文件描述符，引用一个已打开的文件。</li>
-<li>**<code>buf</code>**：指向一个缓冲区的指针，用来存储从文件中读取的数据。</li>
-<li>**<code>count</code>**：指定要读取的字节数。</li>
-<li>**<code>offset</code>**：文件中的偏移量，从文件开始处的字节数，指定从哪里开始读取数据。</li>
+<li><code>fd</code>：文件描述符，引用一个已打开的文件。</li>
+<li><code>buf</code>：指向一个缓冲区的指针，用来存储从文件中读取的数据。</li>
+<li><code>count</code>：指定要读取的字节数。</li>
+<li><code>offset</code>：文件中的偏移量，从文件开始处的字节数，指定从哪里开始读取数据。</li>
 </ul>
 <p>返回值：</p>
 <ul>
@@ -653,8 +653,8 @@ if (true) {
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (setsockopt(sockfd, IPPROTO_IP, IP_ADD_MEMBERSHIP, &amp;mreq, <span class="keyword">sizeof</span>(mreq)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    perror(<span class="string">&quot;setsockopt(IP_ADD_MEMBERSHIP) failed&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>**<code>IPPROTO_IP</code>**：这是设置 IP 层级的选项</li>
-<li>**<code>IP_ADD_MEMBERSHIP</code>**：这个选项用于加入一个多播组</li>
+<li><code>IPPROTO_IP</code>：这是设置 IP 层级的选项</li>
+<li><code>IP_ADD_MEMBERSHIP</code>：这个选项用于加入一个多播组</li>
 </ul>
 <h6 id="完整流程"><a href="#完整流程" class="headerlink" title="完整流程"></a>完整流程</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;netinet/in.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">/*1. 创建UDP套接字*/</span></span><br><span class="line">    <span class="type">int</span> sockfd = socket(AF_INET, SOCK_DGRAM, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (sockfd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;socket creation failed&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*2. 设置struct ip_mreqn结构体属性*/</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ip_mreqn</span> <span class="title">mreqn</span>;</span></span><br><span class="line">    <span class="built_in">memset</span>(&amp;mreqn, <span class="number">0</span>, <span class="keyword">sizeof</span>(mreqn));</span><br><span class="line">    inet_pton(AF_INET, <span class="string">&quot;224.2.2.2&quot;</span>, &amp;mreq.imr_multiaddr);;    <span class="comment">// 多播地址</span></span><br><span class="line">    inet_pton(AF_INET, <span class="string">&quot;0.0.0.0&quot;</span>, &amp;mreq.imr_address);         <span class="comment">// 选择默认接口</span></span><br><span class="line">    mreq.imr_ifindex = if_nametoindex(<span class="string">&quot;etho&quot;</span>);       <span class="comment">// 0 表示让系统选择接口</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*3. 设置套接字属性，在IP层进行设置，打开添加多播组选项IP_ADD_MEMBERSHIP*/</span></span><br><span class="line">    <span class="keyword">if</span> (setsockopt(sockfd, IPPROTO_IP, IP_ADD_MEMBERSHIP, &amp;mreqn, <span class="keyword">sizeof</span>(mreqn)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;setsockopt(IP_ADD_MEMBERSHIP) failed&quot;</span>);</span><br><span class="line">        close(sockfd);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 现在可以接收发向224.2.2.2多播组的数据</span></span><br><span class="line"></span><br><span class="line">    close(sockfd);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
