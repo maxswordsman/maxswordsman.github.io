@@ -204,13 +204,13 @@ if (true) {
 </ul>
 <p><strong>上图各部分分析</strong>：</p>
 <ol>
-<li>**主Reactor (MainReactor)**：<ul>
+<li>主Reactor (MainReactor)：<ul>
 <li><strong>select</strong>：这表示主Reactor正在使用某种形式的I&#x2F;O多路复用技术（如select、poll或epoll）来监听多个网络事件，主要是新的客户端连接请求。</li>
 <li><strong>dispatch</strong>：当主Reactor检测到新的连接请求时，它将分派（或分配）这些连接到合适的子Reactor。</li>
 <li><strong>Acceptor</strong>：这是一个特定的处理组件，负责接受新的连接请求。在accept操作之后，新的客户端连接被创建。</li>
 </ul>
 </li>
-<li>**子Reactor (SubReactor)**：<ul>
+<li>子Reactor (SubReactor)：<ul>
 <li>每个子Reactor都有自己的select和dispatch过程，用于管理它负责的客户端连接。</li>
 <li><strong>Handler</strong>：处理从子Reactor收到的事件。通常，一个Handler会负责读取数据（read）、进行业务处理，并将响应发送（send）回客户端。</li>
 </ul>
